@@ -96,6 +96,14 @@ useEffect(() => {
     .then((data) => setMissions(data.response));
 },[missions.id])
 
+function calculateDateDuration(departDate, endDate){
+    const date1 = new Date(departDate.substr(0,10));
+    const date2 = new Date(endDate.substr(0,10));
+    const diffTime = Math.abs(date2 - date1);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+    return diffDays;
+}
+
 return (
     <React.Fragment>
     <CssBaseline />
@@ -130,22 +138,22 @@ return (
                     <Typography variant="h6" component="h2">
                     {'Description :'}
                     </Typography>
-                    <Typography gutterBottom>
-                    {mission.description.length > 60 && mission.description.substr(0, 60)}
-                    {mission.description.length < 61 && mission.description}
+                    <Typography variant="body2" gutterBottom>
+                    {mission.description.length > 120 && mission.description.substr(0, 120) + "..."}
+                    {mission.description.length < 121 && mission.description}
                     </Typography>
 
                     <Typography variant="h6" component="h2" className={classNames(classes.borderT)}>
                     {'Détails'}
                     </Typography>
                     <Typography>
-                    Durée : {mission.nb_days} jour(s)
+                    Durée : {/*mission.nb_days*/}{calculateDateDuration(mission.start_date, mission.end_date)} jour(s) 
                     </Typography>
                     <Typography>
                     Compétences requises : {mission.skills_required}
                     </Typography>
                     <Typography>
-                    Mission de  {mission.night_or_day == "Day" && <strong>Jour</strong>} {mission.night_or_day == "Night" && <strong>Nuit</strong>}
+                    Mission de <strong>{mission.night_or_day != null && mission.night_or_day.toLowerCase()}</strong>
                     </Typography>
                     <Typography variant="body2" className={classNames(classes.italic, classes.right, classes.note)}>
                     Postée le : {mission.created_at != null && mission.created_at.substr(0, 10)}
