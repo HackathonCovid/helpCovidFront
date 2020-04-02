@@ -46,12 +46,12 @@ return (
 <Container component="main" className={classNames(classes.main, classes.center)} maxWidth="sm">
     <img src="logo.png" alt="logo"/>
     <Typography variant="h2" component="h1" gutterBottom className={classes.blue}>
-    HOPIT & BENEV
+    SANTÉ & BENEV
     </Typography>
     <Typography variant="h5" component="h2" gutterBottom>
     {'Soyons tous ensemble contre le Covid-19 !'}
     </Typography>
-    <Typography variant="body1" className={classes.marginb}>Hopit & Benev permet de faire la liaison entre le volontaire bénévole et les systèmes de santé qui ont besoin d'aide dans la lutte contre le Covid-19</Typography>
+    <Typography variant="body1" className={classes.marginb}>Santé & Benev permet de faire la liaison entre le volontaire bénévole et les systèmes de santé qui ont besoin d'aide dans la lutte contre le Covid-19</Typography>
     {localStorage.getItem('user') && (
     <Grid container direction="row" justify="center" alignItems="center">
         <Grid container item xs={6} spacing={1} direction="row" justify="center" alignItems="center">

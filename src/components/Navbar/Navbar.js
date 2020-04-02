@@ -47,7 +47,7 @@ return (
         <Toolbar>
 
         <Typography variant="h6" className={classes.title}>
-        Hopit&benev
+        Santé&benev
         </Typography>
 
         {localStorage.getItem('user') && (
