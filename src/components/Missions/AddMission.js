@@ -127,7 +127,7 @@ return (
     required
     fullWidth
     id="outlined-multiline-static"
-    label="Desciption"
+    label="Description"
     multiline
     rows="4"
     defaultValue="Description"

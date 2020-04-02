@@ -81,6 +81,9 @@ bottom: '1%',
 right: '1%',
 'z-index': '9999',
 },
+btnMission: {
+    'margin-bottom': theme.spacing(3),
+},
 }));
 
 
@@ -101,6 +104,11 @@ return (
     <CssBaseline />
     <main>
         <Container className={classes.cardGrid} maxWidth="md">
+        <Grid container direction="row" justify="end" alignItems="end">
+            <Button href="/mission/add" className={classes.btnMission} variant="contained" size="medium" color="primary">
+            Créer une mission
+            </Button>
+        </Grid>
         <Grid container spacing={4}>
             {missions && missions.map((mission) => (
             <Grid item key={mission.id} xs={12} sm={6} md={4}>
@@ -125,7 +133,6 @@ return (
                         </Grid>
                     </Grid>
                     
-                   
                     </Typography>
                     <Typography variant="h6" component="h2">
                     {'Description :'}
