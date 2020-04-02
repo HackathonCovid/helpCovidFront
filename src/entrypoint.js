@@ -1,0 +1,1 @@
+export const entrypoint="http://localhost:8080";
