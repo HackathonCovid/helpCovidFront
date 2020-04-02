@@ -150,7 +150,7 @@ return (
                     <Grid item xs={6} sm={6} md={6} direction="row" justify="center" alignItems="center">
                         
                     <Typography variant="body1">
-                    De nuit : {mission.night_or_day}
+                    Mission de {mission.night_or_day}
                     </Typography>
                         
                     </Grid>
