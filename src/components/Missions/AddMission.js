@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
@@ -12,6 +12,8 @@ import RadioGroup from '@material-ui/core/RadioGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Typography from '@material-ui/core/Typography';
 import MuiAlert from '@material-ui/lab/Alert';
+import ImageUploader from "react-images-upload";
+
 
 import history from '../../history';
 import {entrypoint} from "../../entrypoint";
@@ -36,7 +38,7 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-export default function AddArticle() {
+export default function AddMission(props) {
 const classes = useStyles();
 const id = React.useState(JSON.parse(localStorage.getItem('user')).id);
 const author_id = id[0];
@@ -53,7 +55,10 @@ const handleDateChange = (date) => {setStartDate(date);};
 const handleDateChangeEnd = (date) => {setEndDate(date);};
 const handleChangeDN = (event) => {setNightOrDay(event.target.value);};
 const [success, setSuccess] = React.useState(false);
-
+const [pictures, setPictures] = useState([]);
+const onDrop = picture => {
+    setPictures([...pictures, picture]);
+};
 
 const user = JSON.parse(localStorage.getItem("user"));
 
@@ -103,7 +108,7 @@ return (
     </Typography>
         <form className={classes.form} onSubmit={addMission}>
 
-    { success && <Alert severity="success">This is a success message!</Alert> }
+    { success && <Alert severity="success">Mission ajoutée avec succès</Alert> }
 
     <br/>
     <Grid container spacing={2}>
@@ -127,7 +132,7 @@ return (
     required
     fullWidth
     id="outlined-multiline-static"
-    label="Desciption"
+    label="Description"
     multiline
     rows="4"
     defaultValue="Description"
@@ -226,6 +231,16 @@ return (
             <FormControlLabel value="Nuit" control={<Radio />} label="Nuit" />
             <FormControlLabel value="Jour et nuit" control={<Radio />} label="Les deux" />
     </RadioGroup>
+    </Grid>
+
+    <Grid item xs={12}>
+    <ImageUploader
+        {...props}
+        withIcon={true}
+        onChange={onDrop}
+        imgExtension={[".jpg", ".gif", ".png", ".gif"]}
+        maxFileSize={5242880}
+        />
     </Grid>
 
     </Grid>

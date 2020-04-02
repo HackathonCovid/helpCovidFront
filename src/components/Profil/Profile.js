@@ -137,7 +137,7 @@ export default function UserProfil() {
                                 required
                                 fullWidth
                                 id="firstName"
-                                label="First Name"
+                                label="Prénom"
                                 value={firstname}
                                 onChange={e => setFirstname(e.target.value)}
                                 autoFocus
@@ -149,7 +149,7 @@ export default function UserProfil() {
                                 required
                                 fullWidth
                                 id="lastName"
-                                label="Last Name"
+                                label="Nom"
                                 name="lastName"
                                 value={lastname}
                                 onChange={e => setLastname(e.target.value)}
@@ -174,12 +174,12 @@ export default function UserProfil() {
                                 variant="outlined"
                                 required
                                 fullWidth
-                                id="email"
-                                label="email"
-                                name="email"
-                                autoComplete="email"
-                                value={email}
-                                onChange={e => setEmail(e.target.value)}
+                                id="city"
+                                label="Ville"
+                                name="city"
+                                autoComplete="Ville"
+                                value={city}
+                                onChange={e => setCity(e.target.value)}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -187,12 +187,12 @@ export default function UserProfil() {
                                 variant="outlined"
                                 required
                                 fullWidth
-                                id="city"
-                                label="city"
-                                name="city"
-                                autoComplete="city"
-                                value={city}
-                                onChange={e => setCity(e.target.value)}
+                                id="email"
+                                label="Email"
+                                name="email"
+                                autoComplete="email"
+                                value={email}
+                                onChange={e => setEmail(e.target.value)}
                             />
                         </Grid>
                         <Grid item xs={12}>

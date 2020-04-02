@@ -46,7 +46,7 @@ return (
     <AppBar position="static">
         <Toolbar>
 
-        <Typography variant="h6" className={classes.title}>
+        <Typography variant="h6" className={classes.title} onClick={() => { history.push('/')}}>
         Santé&benev
         </Typography>
 

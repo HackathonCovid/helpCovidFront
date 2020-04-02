@@ -81,12 +81,17 @@ bottom: '1%',
 right: '1%',
 'z-index': '9999',
 },
+btnMission: {
+    'margin-bottom': theme.spacing(3),
+},
 }));
 
 
 export default function Missions() {
 const classes = useStyles();
 const [missions, setMissions] = React.useState('');
+const isv = React.useState(JSON.parse(localStorage.getItem('user')).is_volunteer);
+const is_volunt = isv[0];
 
 useEffect(() => {
     fetch(`${entrypoint}/api/missions`,{
@@ -94,7 +99,7 @@ useEffect(() => {
     })
     .then((resp) => resp.json())
     .then((data) => setMissions(data.response));
-},[missions.id])
+},[missions.id]);
 
 function calculateDateDuration(departDate, endDate){
     const date1 = new Date(departDate.substr(0,10));
@@ -109,6 +114,13 @@ return (
     <CssBaseline />
     <main>
         <Container className={classes.cardGrid} maxWidth="md">
+        {is_volunt == 0 &&
+        <Grid container direction="row" justify="end" alignItems="end">
+            <Button href="/mission/add" className={classes.btnMission} variant="contained" size="medium" color="primary">
+            Créer une mission
+            </Button>
+        </Grid>
+    }
         <Grid container spacing={4}>
             {missions && missions.map((mission) => (
             <Grid item key={mission.id} xs={12} sm={6} md={4}>
@@ -133,7 +145,6 @@ return (
                         </Grid>
                     </Grid>
                     
-                   
                     </Typography>
                     <Typography variant="h6" component="h2">
                     {'Description :'}
@@ -173,9 +184,11 @@ return (
         </Grid>
         </Container>
     </main>
+    {is_volunt == 0 &&
     <Fab onClick= {() =>(history.push('/mission/add'))} color="primary" aria-label="add" className={classes.margin}>
             <AddIcon />
         </Fab>
+    }
     </React.Fragment>
 );
 }
