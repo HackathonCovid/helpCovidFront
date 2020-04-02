@@ -80,8 +80,7 @@ export default function About() {
         })
             .then((response) => response.json())
             .then((data) => {
-                comments.push(data.response)
-                setComments(comments)
+               setComments([...comments, data.response])               
             })
             .catch((error) => {
                 console.error(error);
@@ -99,7 +98,6 @@ export default function About() {
         
     }, id)
    
-
     return (
     <div className={classes.root}>
         <React.Fragment>
