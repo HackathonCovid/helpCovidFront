@@ -88,19 +88,19 @@ return (
                 />
                 <CardContent className={classes.cardContent}>
                     <Typography gutterBottom variant="h5" component="h2">
-                    {mission.title}
+                    {mission.mission.title}
                     </Typography>
                     <Typography>
-                    {mission.description}
+                    {mission.mission.description}
                     </Typography>
                     <Typography>
-                    Nombre personnes : {mission.nb_people_required}
+                    Nombre personnes : {mission.mission.nb_people_required}
                     </Typography>
                     <Typography>
-                    Compétences requises : {mission.skills_required}
+                    Compétences requises : {mission.mission.skills_required}
                     </Typography>
                     <Typography>
-                    Jour ou nuit : {mission.night_or_day}
+                    Jour ou nuit : {mission.mission.night_or_day}
                     </Typography>
                 </CardContent>
                 <CardActions>
