@@ -97,7 +97,15 @@ export default function About() {
         })
             .then((response) => response.json())
             .then((data) => {
-               setComments([...comments, data.response])               
+                if(data.status!=401){
+                    let tab =  data.response;
+                    tab.user.firstname = user.firstname
+                    tab.user.lastname = user.lastname
+
+                    setComments([...comments, tab])  
+
+                }
+                console.log(data)             
             })
             .catch((error) => {
                 console.error(error);
@@ -125,11 +133,17 @@ export default function About() {
         .then((resp) => resp.json())
         .then((data) => {
         if(data) {
-            setSuccess(true);
+            for(let i = 0; i< comments.length; i++){
+                if(comments[i].id == idc){
+                    comments.splice(i, 1);
+                    setComments(comments)
+                }
+            }
+            //setSuccess(true);
         }
         })
     }
-
+    console.log(comments)
     return (
     <div className={classes.root}>
         <React.Fragment>
@@ -180,8 +194,8 @@ export default function About() {
                                 <MoreVertIcon />
                             </IconButton>
                             }
-                            title={user.firstname}
-                            subheader={user.lastname}
+                            title={comment.user.firstname}
+                            subheader={comment.user.lastname}
                         />
                         <Menu
                             id="menu-appbar"
@@ -198,7 +212,8 @@ export default function About() {
                             open={open}
                             onClose={handleClose}
                         >
-                            <MenuItem onClick={() => {deleteCom(comment.id)}}>Supprimer</MenuItem>
+                            {user && comment.user_id == user.id && <MenuItem onClick={() => {deleteCom(comment.id)}}>Supprimer</MenuItem>}
+                            
                         </Menu>
                         <CardMedia
                             className={classes.media}
