@@ -92,7 +92,11 @@ const classes = useStyles();
 const [missions, setMissions] = React.useState('');
 const usrS = React.useState(JSON.parse(localStorage.getItem('user')))
 const isv = (usrS[0]!= undefined)?usrS[0].is_volunteer :undefined;
-const is_volunt = (isv)? isv[0]:undefined ;
+let   isvolunt = false;
+if(isv == 0){
+    isvolunt = true;
+    console.log(isvolunt);
+}
 
 useEffect(() => {
     fetch(`${entrypoint}/api/missions`,{
@@ -115,7 +119,7 @@ return (
     <CssBaseline />
     <main>
         <Container className={classes.cardGrid} maxWidth="md">
-        {is_volunt && is_volunt == 0 &&
+        {isvolunt &&
         <Grid container direction="row" justify="end" alignItems="end">
             <Button href="/mission/add" className={classes.btnMission} variant="contained" size="medium" color="primary">
             Créer une mission
@@ -185,7 +189,7 @@ return (
         </Grid>
         </Container>
     </main>
-    {is_volunt && is_volunt == 0 &&
+    {isvolunt &&
     <Fab onClick= {() =>(history.push('/mission/add'))} color="primary" aria-label="add" className={classes.margin}>
             <AddIcon />
         </Fab>

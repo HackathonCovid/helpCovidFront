@@ -10,9 +10,6 @@ import AccountBox from '@material-ui/icons/AccountBox';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
-import DateFnsUtils from '@date-io/date-fns';
-import MenuItem from '@material-ui/core/MenuItem';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 
@@ -53,6 +50,7 @@ export default function ChangerMdp() {
     const data = JSON.parse(localStorage.getItem('user'));
     const token = data.token;
     const [email, setEmail] = React.useState(data.email);
+    const [retype_password, setRetypePassword] = React.useState('');
     const [new_password, setNewPassword] = React.useState('');
     const [current_password, setCurrentPassword]= React.useState('');
     const [updateSuccess, setUpdateSuccess] = React.useState(false);
@@ -69,7 +67,7 @@ export default function ChangerMdp() {
         e.preventDefault();
         e.stopPropagation();
 
-        fetch(`${entrypoint}/api/users/${data.id}`, {
+        fetch(`${entrypoint}/api/password/usersreset`, {
             method: 'PUT',
             headers: {
                 Accept: 'application/json',
@@ -80,6 +78,7 @@ export default function ChangerMdp() {
                 email,
                 current_password,
                 new_password,
+                retype_password,
             }),
         })
             .then((response) => response.json())
@@ -151,6 +150,20 @@ export default function ChangerMdp() {
                                 type="password"
                                 value={new_password}
                                 onChange={e => setNewPassword(e.target.value)}
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                variant="outlined"
+                                required
+                                fullWidth
+                                id="new_password"
+                                label="Vérification du nouveau mot de passe"
+                                name="new_password"
+                                autoComplete="new_password"
+                                type="password"
+                                value={retype_password}
+                                onChange={e => setRetypePassword(e.target.value)}
                             />
                         </Grid>
                     </Grid>
