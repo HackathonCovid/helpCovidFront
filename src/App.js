@@ -9,11 +9,13 @@ import Login from './components/Auth/Login';
 import Home from './components/Home/Home';
 import About from './components/Home/About';
 import Profile from './components/Profil/Profile';
+import ChangerMdp from './components/Profil/ChangerMdp';
 import Missions from './components/Missions/Missions';
 import AddMission from './components/Missions/AddMission';
 import UpdateMission from './components/Missions/UpdateMission';
 import MesMissions from './components/Missions/MesMissions';
 import FicheMission from './components/Missions/FicheMission';
+
 
 
 import history from './history.js';
@@ -78,6 +80,7 @@ export default function App() {
         <ProtectedRoute path="/Mesmissions" component={MesMissions} />
         <ProtectedRoute path="/mission/update" component={UpdateMission} />
         <ProtectedRoute path="/profil" component={Profile} />
+        <ProtectedRoute path="/changerMdp" component={ChangerMdp} />
       </Router>
   );
 }

@@ -285,7 +285,7 @@ export default function SignUp() {
                         color="primary"
                         className={classes.submit}
                     >
-                        Sign Up
+                        S'enregistrer
                     </Button>
                     <Grid container justify="flex-end">
                         <Grid item>

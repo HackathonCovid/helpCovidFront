@@ -56,9 +56,19 @@ const handleDateChangeEnd = (date) => {setEndDate(date);};
 const handleChangeDN = (event) => {setNightOrDay(event.target.value);};
 const [success, setSuccess] = React.useState(false);
 const [pictures, setPictures] = useState([]);
-const onDrop = picture => {
+let file_base_64 = '';
+const onDrop = (picture, pictureDataURLs) => {
+    file_base_64 = pictureDataURLs[0];
     setPictures([...pictures, picture]);
 };
+
+function calculateDateDuration(departDate, endDate){
+    const date1 = new Date(departDate.substr(0,10));
+    const date2 = new Date(endDate.substr(0,10));
+    const diffTime = Math.abs(date2 - date1);
+    const nb_days = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+    return nb_days;
+}
 
 const user = JSON.parse(localStorage.getItem("user"));
 
@@ -84,6 +94,7 @@ function addMission(e) {
         night_or_day,
         skills_required,
         address_hospital,
+        file_base_64,
 
     }),
     })
@@ -238,8 +249,11 @@ return (
         {...props}
         withIcon={true}
         onChange={onDrop}
-        imgExtension={[".jpg", ".gif", ".png", ".gif"]}
+        imgExtension={["jpeg",".jpg", ".gif", ".png", ".gif"]}
         maxFileSize={5242880}
+        defaultImage
+        withPreview
+        singleImage
         />
     </Grid>
 
