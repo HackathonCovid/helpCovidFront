@@ -234,6 +234,7 @@ export default function UpdateArticle() {
                             <RadioGroup aria-label="Jour ou nuit" name="jourounuit" value={night_or_day} onChange={handleChangeDN}>
                                 <FormControlLabel value="Jour" control={<Radio />} label="Jour" />
                                 <FormControlLabel value="Nuit" control={<Radio />} label="Nuit" />
+                                <FormControlLabel value="Jour et nuit" control={<Radio />} label="Les deux" />
                             </RadioGroup>
                         </Grid>
                     </Grid>

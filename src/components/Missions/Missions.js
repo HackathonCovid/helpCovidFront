@@ -108,7 +108,7 @@ const renderPostulerButton = (missionId, userMissions) => {
         if(userMissions[i].mission_id === missionId){
             return(
                 <Button size="small" color="primary" onClick={() => (removeApplyMission(userMissions[i].id, i))}>
-                    Annuler
+                    Annuler ma mission
                 </Button>
             )
         }
