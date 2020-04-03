@@ -80,13 +80,7 @@ align: {
 display: 'flex',
 'align-items': 'center',
 'justify-content': 'center',
-},
-margin: {
-position: 'fixed',
-bottom: '1%',
-right: '1%',
-'z-index': '9999',
-},
+}
 }));
 
 
@@ -95,6 +89,8 @@ const classes = useStyles();
 const userData = JSON.parse(localStorage.getItem('user'));
 const [missions, setMissions] = React.useState('');
 const [applySuccess, setApplySuccess] = React.useState(false);
+const [userMissions, setUserMissions] = React.useState('');
+
 
 const handleClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -103,7 +99,6 @@ const handleClose = (event, reason) => {
     setApplySuccess(false);
 };
 
-
     useEffect(() => {
         fetch(`${entrypoint}/api/missions`,{
         method : 'GET'
@@ -111,6 +106,14 @@ const handleClose = (event, reason) => {
         .then((resp) => resp.json())
         .then((data) => setMissions(data.response));
     },[missions.id]);
+
+    useEffect(() => {
+        fetch(`${entrypoint}/api/userapplies/${userData.id}`,{
+            method : 'GET'
+        })
+            .then((resp) => resp.json())
+            .then((data) => setUserMissions(data.response));
+    },[]);
 
     function applyMission(missionId) {
 
@@ -166,6 +169,11 @@ const handleClose = (event, reason) => {
             });
     }
 
+    function renderPostulerButton(missionId) {
+        console.log(missionId);
+        console.log(userMissions);
+    }
+
 return (
     <React.Fragment>
     <CssBaseline />
@@ -184,7 +192,6 @@ return (
                     title="Image title"
                 />
                 <CardContent className={classes.cardContent}>
-                    
                     <Typography className={classNames(classes.align, classes.marginb)}>
                     <Grid container direction="row" justify="center" alignItems="center">
                         <Grid container item xs={3} direction="row" justify="center" alignItems="center">
@@ -194,8 +201,6 @@ return (
                             Contact : {mission.author.firstname} {mission.author.lastname}
                         </Grid>
                     </Grid>
-                    
-                   
                     </Typography>
                     <Typography variant="h6" component="h2">
                     {'Description :'}
@@ -225,9 +230,12 @@ return (
                     <Button href={"/mission/fiche/" + mission.id} size="small" color="primary">
                     Voir
                     </Button>
-                    <Button size="small" color="primary" onClick={() => (applyMission(mission.id))}>
-                    Postuler
-                    </Button>
+                    {renderPostulerButton(mission.id)}
+                    {userMissions && userMissions.filter(userMission => userMission.include(mission.id)).map(userMissionFiltered => (
+                        <Button size="small" color="primary" onClick={() => (removeApplyMission(mission.id))}>
+                            Annuler
+                        </Button>
+                        ))}
                 </CardActions>
                 </Card>
             </Grid>
@@ -242,7 +250,7 @@ return (
     </main>
     <Fab onClick= {() =>(history.push('/mission/add'))} color="primary" aria-label="add" className={classes.margin}>
             <AddIcon />
-        </Fab>
+    </Fab>
     </React.Fragment>
 );
 }
