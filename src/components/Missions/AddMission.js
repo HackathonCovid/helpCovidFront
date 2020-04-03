@@ -56,15 +56,17 @@ const handleDateChangeEnd = (date) => {setEndDate(date);};
 const handleChangeDN = (event) => {setNightOrDay(event.target.value);};
 const [success, setSuccess] = React.useState(false);
 const [pictures, setPictures] = useState([]);
-let file_base_64 = '';
+const [file_base_64, setfile_base_64] = React.useState('');
 const onDrop = (picture, pictureDataURLs) => {
-    file_base_64 = pictureDataURLs[0];
+    setfile_base_64(pictureDataURLs[0]);
     setPictures([...pictures, picture]);
 };
+console.log(file_base_64);
 
-function calculateDateDuration(departDate, endDate){
-    const date1 = new Date(departDate.substr(0,10));
-    const date2 = new Date(endDate.substr(0,10));
+function calculateDateDuration(){
+    console.log(start_date);
+    const date1 = new Date(start_date);
+    const date2 = new Date(end_date);
     const diffTime = Math.abs(date2 - date1);
     const nb_days = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
     return nb_days;
@@ -76,6 +78,7 @@ function addMission(e) {
     e.preventDefault();
     e.stopPropagation();
     
+let nb_days = calculateDateDuration();
 
     fetch(`${entrypoint}/api/missions`, {
     method: 'POST',
@@ -95,6 +98,7 @@ function addMission(e) {
         skills_required,
         address_hospital,
         file_base_64,
+        nb_days,
 
     }),
     })
@@ -158,7 +162,7 @@ return (
         required
         fullWidth
         id="outlined-required"
-        label="adresse de l'hopital"
+        label="adresse de l'établissement"
         className={classes.textField}
         margin="normal"
         variant="outlined"

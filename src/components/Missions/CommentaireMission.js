@@ -170,7 +170,7 @@ export default function About() {
                     Commentaire
                     </Typography>
                     {comments && comments.map((comment) => (
-                    <Card>
+                    <Card className={classNames(classes.margint2)}>
                         <CardHeader
                             avatar={
                                 <Avatar src="/broken-image.jpg" />
@@ -180,8 +180,8 @@ export default function About() {
                                 <MoreVertIcon />
                             </IconButton>
                             }
-                            title={user.firstname}
-                            subheader={user.lastname}
+                            title={comment.user.firstname}
+                            subheader={comment.user.lastname}
                         />
                         <Menu
                             id="menu-appbar"
