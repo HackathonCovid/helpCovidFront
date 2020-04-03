@@ -15,8 +15,7 @@ import AddMission from './components/Missions/AddMission';
 import UpdateMission from './components/Missions/UpdateMission';
 import MesMissions from './components/Missions/MesMissions';
 import FicheMission from './components/Missions/FicheMission';
-
-
+import MesMissionsApp from './components/Missions/MesMissionsApp';
 
 import history from './history.js';
 
@@ -78,6 +77,7 @@ export default function App() {
         <NonProtectedRoute path="/mission/fiche/:id" component={FicheMission} />
         <ProtectedRoute path="/mission/add" component={AddMission} />
         <ProtectedRoute path="/Mesmissions" component={MesMissions} />
+        <ProtectedRoute path="/Mesmissions/benev" component={MesMissionsApp} />
         <ProtectedRoute path="/mission/update" component={UpdateMission} />
         <ProtectedRoute path="/profil" component={Profile} />
         <ProtectedRoute path="/changerMdp" component={ChangerMdp} />
