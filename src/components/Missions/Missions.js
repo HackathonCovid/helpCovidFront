@@ -127,6 +127,11 @@ const handleClose = (event, reason) => {
     }
     setApplySuccess(false);
 };
+let   isvolunt = false;
+if(isv == 0){
+    isvolunt = true;
+    console.log(isvolunt);
+}
 
 useEffect(() => {
     fetch(`${entrypoint}/api/missions`,{
@@ -218,7 +223,7 @@ return (
     <CssBaseline />
     <main>
         <Container className={classes.cardGrid} maxWidth="md">
-        {is_volunt && is_volunt == 0 &&
+        {isvolunt &&
         <Grid container direction="row" justify="end" alignItems="end">
             <Button href="/mission/add" className={classes.btnMission} variant="contained" size="medium" color="primary">
             Créer une mission
@@ -294,7 +299,7 @@ return (
         </Snackbar>
         </Container>
     </main>
-    {is_volunt && is_volunt == 0 &&
+    {isvolunt &&
     <Fab onClick= {() =>(history.push('/mission/add'))} color="primary" aria-label="add" className={classes.margin}>
             <AddIcon />
         </Fab>
