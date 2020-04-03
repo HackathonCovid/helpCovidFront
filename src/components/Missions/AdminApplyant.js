@@ -69,6 +69,13 @@ export default function About() {
 
 
     const AccepteUser = (element, appliant, validate) => {
+        
+    //element.target.style.backgroundColor = "green";
+    if(validate ==1){
+        element.target.style.color = "green";
+    }else{
+    element.target.style.color = "red";
+    }
         let id = appliant.id;
         let user_id = appliant.user_id;
         let mission_id = appliant.mission_id;
@@ -110,10 +117,10 @@ export default function About() {
                     primary={appliant.user.firstname + '' + appliant.user.lastname}
                     />
                     <ListItemSecondaryAction>
-                    <IconButton  onClick={() => {AccepteUser(this, appliant,1)}} aria-label="delete">
+                    <IconButton  onClick={(element) => {AccepteUser(element, appliant,1)}} aria-label="delete">
                         <CheckCircleIcon />
                     </IconButton>
-                    <IconButton onClick={() => {AccepteUser(this,appliant,2)}} aria-label="delete">
+                    <IconButton onClick={(element) => {AccepteUser(element,appliant,2)}} aria-label="delete">
                         <CancelIcon />
                     </IconButton>
                     </ListItemSecondaryAction>

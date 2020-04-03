@@ -83,6 +83,29 @@ function calculateDateDuration(departDate, endDate){
     }
     
 }
+
+const postuler = (element, id) =>{
+
+    element.currentTarget.style.backgroundColor = "green";
+    console.log(id)
+    fetch(`${entrypoint}/api/applies/${id}`, {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'authorization': 'Bearer '+ user.token,
+        },
+        })
+        .then((response) => response.json())
+        .then((data) => {
+        if(data.response.hasOwnProperty('author_id')) {
+            
+        }
+        })
+        .catch((error) => {
+        console.error(error);
+        });
+}
 /*console.log()
 console.log(mission);
 console.log(author);*/
@@ -205,8 +228,8 @@ return (
                 
             </CardContent>
             <CardActions className={classNames(classes.margin, classes.padding, classes.center)}>
-            <Button variant="contained" size="small" color="secondary" className={classNames(classes.margin, classes.padding)}>
-            Je postule !
+            <Button onClick={ elemnt => {postuler(elemnt,mission.id)}} variant="contained" size="small" color="secondary" className={classNames(classes.margin, classes.padding)}>
+                Je postule !
             </Button>
             </CardActions>
         </Card>
