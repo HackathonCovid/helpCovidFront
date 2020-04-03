@@ -13,6 +13,7 @@ import classNames from 'classnames';
 import { useParams } from "react-router-dom";
 import Avatar from '@material-ui/core/Avatar';
 import CommentaireMission from './CommentaireMission';
+import AdminApplyant from './AdminApplyant';
 
 
 import {entrypoint} from "../../entrypoint";
@@ -209,6 +210,8 @@ return (
             </Button>
             </CardActions>
         </Card>
+
+        <AdminApplyant/>
 
         <CommentaireMission/>
     
