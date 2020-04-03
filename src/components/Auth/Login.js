@@ -24,6 +24,9 @@ function Alert(props) {
 }
 
 const useStyles = makeStyles((theme) => ({
+    canvas: {
+        minHeight : '91vh',
+    },
     paper: {
         marginTop: theme.spacing(8),
         display: 'flex',
@@ -88,7 +91,7 @@ export default function SignInSide() {
     }
 
     return (
-        <Container component="main" maxWidth="xs">
+        <Container component="main" maxWidth="xs" className={classes.canvas}>
             <CssBaseline />
             { error && <Snackbar open={error} autoHideDuration={6000} onClose={handleClose}>
                 <Alert onClose={handleClose} severity="error">

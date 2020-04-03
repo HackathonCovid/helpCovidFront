@@ -18,8 +18,16 @@ root: {
 menuButton: {
     marginRight: theme.spacing(2),
 },
+buttonhover: {
+    '&:hover': {
+        background: "#009FFF",
+        },
+},
 title: {
     flexGrow: 1,
+    '&:hover': {
+        cursor : 'pointer',
+        },
 },
 }));
 
@@ -52,7 +60,14 @@ return (
 
         {localStorage.getItem('user') && (
             <div>
-            <Button color="inherit" href="/missions">Nos missions</Button>
+            <Button className={classes.buttonhover} color="inherit" href="/">Home</Button>
+            {!localStorage.getItem('user') && (
+            <Button className={classes.buttonhover} color="inherit" href="/register/benevole">Devenir bénévole</Button>
+            )}
+            {!localStorage.getItem('user') && (
+            <Button className={classes.buttonhover} color="inherit" href="/register/soignant">J'ai une mission</Button>
+            )}
+            <Button className={classes.buttonhover} color="inherit" href="/missions">Nos missions</Button>
             <IconButton
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
@@ -81,7 +96,7 @@ return (
                 <MenuItem onClick={() => {history.push('/mesmissions')}}>Mes missions crées</MenuItem>
                 <MenuItem onClick={() => {history.push('/mesmissionsbenev')}}>Mes missions de benevolat</MenuItem>
                 <MenuItem onClick={() => {history.push('/changerMdp')}}>Changer mon mot de passe</MenuItem>
-                <MenuItem onClick={() => { localStorage.removeItem('user'); history.push('/'); } }>Se déconecter</MenuItem>
+                <MenuItem onClick={() => { localStorage.removeItem('user'); history.push('/'); } }>Se déconnecter</MenuItem>
             </Menu>
             </div>
         )}

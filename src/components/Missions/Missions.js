@@ -28,7 +28,9 @@ const useStyles = makeStyles((theme) => ({
 center: {
     textAlign: 'center',
 },
-
+canvas: {
+    minHeight : '91vh',
+},
 blue:{
     color : '#009FFF',
 },
@@ -221,7 +223,7 @@ function calculateDateDuration(departDate, endDate){
 return (
     <React.Fragment>
     <CssBaseline />
-    <main>
+    <main className={classes.canvas}>
         <Container className={classes.cardGrid} maxWidth="md">
         {isvolunt &&
         <Grid container direction="row" justify="end" alignItems="end">
@@ -231,7 +233,11 @@ return (
         </Grid>
     }
         <Grid container spacing={4}>
-            {missions && missions.map((mission) => (
+            {missions.length == 0 && 
+                <Typography variant="h5" className={classNames(classes.marginb)}><p>Il n'y a pas encore de mission !</p>
+                <p>Si vous participez à la lutte contre le Covid-19, pourquoi ne pas créer votre première mission ici ?</p></Typography>
+            }
+            {missions.length > 0 && missions && missions.map((mission) => (
             <Grid item key={mission.id} xs={12} sm={6} md={4}>
                 <Card className={classes.card}>
                 <CardHeader className={classes.bgred}
