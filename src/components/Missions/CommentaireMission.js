@@ -105,7 +105,7 @@ export default function About() {
                     setComments([...comments, tab])  
 
                 }
-                console.log(data)             
+            //    console.log(data)             
             })
             .catch((error) => {
                 console.error(error);
@@ -143,7 +143,7 @@ export default function About() {
         }
         })
     }
-    console.log(comments)
+    //console.log(comments)
     return (
     <div className={classes.root}>
         <React.Fragment>

@@ -56,6 +56,7 @@ export default function About() {
     const classes = useStyles();
     const [appliants, setAppliant] = React.useState('');
     let { id } = useParams();
+    const user = JSON.parse(localStorage.getItem("user"));
 
     useEffect(() => {
         fetch(`${entrypoint}/api/applies/${id}`,{
@@ -66,6 +67,26 @@ export default function About() {
         
     }, id)
 
+
+    const AccepteUser = (element, appliant, validate) => {
+        let id = appliant.id;
+        let user_id = appliant.user_id;
+        let mission_id = appliant.mission_id;
+        //element.color = 'inherit';
+        fetch(`${entrypoint}/api/validate/${id}` , {
+        method: 'POST',
+        body: JSON.stringify({
+            id,
+            user_id,
+            mission_id,
+            validate,
+        }),
+        })
+        .then((resp) => resp.json())
+        .then((data) => {
+          //  console.log(data)
+        })
+    }
     console.log(appliants)
 
     return (
@@ -86,17 +107,14 @@ export default function About() {
                         <AccountBoxIcon/>
                     </ListItemAvatar>
                     <ListItemText
-                    primary={appliant.mission.author.firstname + '' + appliant.mission.author.lastname}
+                    primary={appliant.user.firstname + '' + appliant.user.lastname}
                     />
                     <ListItemSecondaryAction>
-                    <IconButton aria-label="delete">
+                    <IconButton  onClick={() => {AccepteUser(this, appliant,1)}} aria-label="delete">
                         <CheckCircleIcon />
                     </IconButton>
-                    <IconButton aria-label="delete">
+                    <IconButton onClick={() => {AccepteUser(this,appliant,2)}} aria-label="delete">
                         <CancelIcon />
-                    </IconButton>
-                    <IconButton aria-label="delete">
-                        <CommentIcon />
                     </IconButton>
                     </ListItemSecondaryAction>
                 </ListItem>

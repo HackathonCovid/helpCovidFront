@@ -94,7 +94,6 @@ function addMission(e) {
         night_or_day,
         skills_required,
         address_hospital,
-        file_base_64,
 
     }),
     })
@@ -245,7 +244,7 @@ return (
     </Grid>
 
     <Grid item xs={12}>
-    <ImageUploader
+    {/*<ImageUploader
         {...props}
         withIcon={true}
         onChange={onDrop}
@@ -254,7 +253,7 @@ return (
         defaultImage
         withPreview
         singleImage
-        />
+    />*/}
     </Grid>
 
     </Grid>

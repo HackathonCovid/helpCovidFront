@@ -55,7 +55,7 @@ const [mission, setMission] = React.useState('');
 const [fetched, setFetched] = React.useState(false);
 const [author, setAuthor] = React.useState('');
 let { id } = useParams();
-
+const user = JSON.parse(localStorage.getItem("user"));
 const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
@@ -83,9 +83,9 @@ function calculateDateDuration(departDate, endDate){
     }
     
 }
-
+/*console.log()
 console.log(mission);
-console.log(author);
+console.log(author);*/
 return (
 <div className={classes.root}>
 <CssBaseline />
@@ -211,8 +211,8 @@ return (
             </CardActions>
         </Card>
 
-        <AdminApplyant/>
-
+       {user && mission && user.id==mission.author.id &&  <AdminApplyant/>}
+       <AdminApplyant/>
         <CommentaireMission/>
     
     </Container>
