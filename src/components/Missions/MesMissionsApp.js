@@ -16,6 +16,7 @@ import history from '../../history';
 import {entrypoint} from "../../entrypoint";
 
 
+
 function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
@@ -51,8 +52,11 @@ footer: {
 
 export default function MesMissionsApp() {
 const classes = useStyles();
+const userData = JSON.parse(localStorage.getItem('user'));
 const [missions, setMissions] = React.useState('');
 const [success, setSuccess] = React.useState(false);
+const [userMissions, setUserMissions] = React.useState('');
+const [cancelSuccess, setCancelSuccess] = React.useState(false);
 const id = React.useState(JSON.parse(localStorage.getItem('user')).id);
 const author_id = id[0];
 
@@ -73,6 +77,33 @@ useEffect(() => {
     .then((resp) => resp.json())
     .then((data) => setMissions(data.response));
 },[author_id])
+
+function removeApplyMission(missionId) {
+
+    const applyId = userData.id;
+    fetch(`${entrypoint}/api/applies/${missionId}`, {
+        method: 'DELETE',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'authorization': 'Bearer ' + userData.token,
+        },
+        body: JSON.stringify({
+            applyId,
+            missionId
+        }),
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            if(data.status === 200) {
+                window.location.reload();
+                setCancelSuccess(true);
+            }
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+}
 
 
 return (
@@ -114,7 +145,11 @@ return (
                     <Button href={"/mission/fiche/" + mission.id} size="small" color="primary">
                     Voir
                     </Button>
+                    <Button onClick={() => (removeApplyMission(mission.id))} size="small" color="primary">
+                    Annuler ma mission
+                    </Button>
                 </CardActions>
+
                 </Card>
             </Grid>
             ))}
