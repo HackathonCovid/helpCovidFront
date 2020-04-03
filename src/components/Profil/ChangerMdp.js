@@ -67,8 +67,8 @@ export default function ChangerMdp() {
         e.preventDefault();
         e.stopPropagation();
 
-        fetch(`${entrypoint}/api/password/usersreset`, {
-            method: 'PUT',
+        fetch(`${entrypoint}/api/password/userreset`, {
+            method: 'POST',
             headers: {
                 Accept: 'application/json',
                 'Content-Type': 'application/json',
@@ -85,7 +85,6 @@ export default function ChangerMdp() {
             .then((data) => {
                 if(data.status === 200) {
                     setUpdateSuccess(true);
-                    data.response.token = token;
                     localStorage.removeItem('user');
                     history.push('/login');
                 }
