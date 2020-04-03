@@ -24,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
 icon: {
     marginRight: theme.spacing(2),
 },
+canvas: {
+    minHeight : '91vh',
+},
 cardGrid: {
     paddingTop: theme.spacing(8),
     paddingBottom: theme.spacing(8),
@@ -75,10 +78,14 @@ useEffect(() => {
 return (
     <React.Fragment>
     <CssBaseline />
-    <main>
+    <main className={classes.canvas}>
         <Container className={classes.cardGrid} maxWidth="md">
         <Grid container spacing={4}>
-            {missions && missions.map((mission) => (
+            {missions.length == 0 && 
+                <Typography variant="h5" className={classes.marginb}><p>Vous n'avez pas encore de mission !</p>
+                <p>Si vous souhaitez participer à la lutte contre le Covid-19, cette plateforme est pour vous ;)</p></Typography>
+            }
+            {missions.length >0 && missions && missions.map((mission) => (
             <Grid item key={mission.id} xs={12} sm={6} md={4}>
                 <Card className={classes.card}>
                 <CardMedia
