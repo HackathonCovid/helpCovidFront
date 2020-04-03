@@ -17,6 +17,12 @@ import classNames from 'classnames';
 
 import history from '../../history';
 import {entrypoint} from "../../entrypoint";
+import MuiAlert from "@material-ui/lab/Alert";
+import Snackbar from "@material-ui/core/Snackbar";
+
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const useStyles = makeStyles((theme) => ({
 center: {
@@ -86,15 +92,79 @@ right: '1%',
 
 export default function Missions() {
 const classes = useStyles();
+const userData = JSON.parse(localStorage.getItem('user'));
 const [missions, setMissions] = React.useState('');
+const [applySuccess, setApplySuccess] = React.useState(false);
 
-useEffect(() => {
-    fetch(`${entrypoint}/api/missions`,{
-    methode : 'GET'
-    })
-    .then((resp) => resp.json())
-    .then((data) => setMissions(data.response));
-},[missions.id])
+const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+        return;
+    }
+    setApplySuccess(false);
+};
+
+
+    useEffect(() => {
+        fetch(`${entrypoint}/api/missions`,{
+        method : 'GET'
+        })
+        .then((resp) => resp.json())
+        .then((data) => setMissions(data.response));
+    },[missions.id]);
+
+    function applyMission(missionId) {
+
+        const applyId = userData.id;
+        fetch(`${entrypoint}/api/applies/${missionId}`, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'authorization': 'Bearer ' + userData.token,
+            },
+            body: JSON.stringify({
+                applyId,
+                missionId
+            }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                if(data.status === 201) {
+                    setApplySuccess(true);
+                    history.push('/missions');
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
+    function removeApplyMission(missionId) {
+
+        const applyId = userData.id;
+        fetch(`${entrypoint}/api/applies/${missionId}`, {
+            method: 'DELETE',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'authorization': 'Bearer ' + userData.token,
+            },
+            body: JSON.stringify({
+                applyId,
+                missionId
+            }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                if(data.status === 201) {
+                    setApplySuccess(true);
+                    history.push('/missions');
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
 
 return (
     <React.Fragment>
@@ -155,7 +225,7 @@ return (
                     <Button href={"/mission/fiche/" + mission.id} size="small" color="primary">
                     Voir
                     </Button>
-                    <Button size="small" color="primary">
+                    <Button size="small" color="primary" onClick={() => (applyMission(mission.id))}>
                     Postuler
                     </Button>
                 </CardActions>
@@ -163,6 +233,11 @@ return (
             </Grid>
             ))}
         </Grid>
+        <Snackbar open={applySuccess} autoHideDuration={6000} onClose={handleClose}>
+            <Alert onClose={handleClose} severity="success">
+                Inscription réussie
+            </Alert>
+        </Snackbar>
         </Container>
     </main>
     <Fab onClick= {() =>(history.push('/mission/add'))} color="primary" aria-label="add" className={classes.margin}>
