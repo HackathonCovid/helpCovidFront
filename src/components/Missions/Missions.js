@@ -101,7 +101,24 @@ const usrS = React.useState(JSON.parse(localStorage.getItem('user')))
 const isv = (usrS[0]!= undefined)?usrS[0].is_volunteer :undefined;
 const is_volunt = (isv)? isv[0]:undefined ;
 const [applySuccess, setApplySuccess] = React.useState(false);
+const [cancelSuccess, setCancelSuccess] = React.useState(false);
 const [userMissions, setUserMissions] = React.useState('');
+const renderPostulerButton = (missionId, userMissions) => {
+    for(let i = 0 ; i < userMissions.length; i++){
+        if(userMissions[i].mission_id === missionId){
+            return(
+                <Button size="small" color="primary" onClick={() => (removeApplyMission(userMissions[i].id, i))}>
+                    Annuler
+                </Button>
+            )
+        }
+    }
+    return(
+        <Button size="small" color="primary" onClick={() => (applyMission(missionId))}>
+            Postuler
+        </Button>
+    )
+};
 
 
 const handleClose = (event, reason) => {
@@ -160,8 +177,8 @@ function calculateDateDuration(departDate, endDate){
             .then((response) => response.json())
             .then((data) => {
                 if(data.status === 201) {
+                    window.location.reload();
                     setApplySuccess(true);
-                    history.push('/missions');
                 }
             })
             .catch((error) => {
@@ -169,7 +186,7 @@ function calculateDateDuration(departDate, endDate){
             });
     }
 
-    function removeApplyMission(missionId) {
+    function removeApplyMission(missionId, i) {
 
         const applyId = userData.id;
         fetch(`${entrypoint}/api/applies/${missionId}`, {
@@ -186,19 +203,14 @@ function calculateDateDuration(departDate, endDate){
         })
             .then((response) => response.json())
             .then((data) => {
-                if(data.status === 201) {
-                    setApplySuccess(true);
-                    history.push('/missions');
+                if(data.status === 200) {
+                    window.location.reload();
+                    setCancelSuccess(true);
                 }
             })
             .catch((error) => {
                 console.error(error);
             });
-    }
-
-    function renderPostulerButton(missionId) {
-        console.log(missionId);
-        console.log(userMissions);
     }
 
 return (
@@ -264,12 +276,7 @@ return (
                     <Button href={"/mission/fiche/" + mission.id} size="small" color="primary">
                     Voir
                     </Button>
-                    {renderPostulerButton(mission.id)}
-                    {userMissions && userMissions.filter(userMission => userMission.include(mission.id)).map(userMissionFiltered => (
-                        <Button size="small" color="primary" onClick={() => (removeApplyMission(mission.id))}>
-                            Annuler
-                        </Button>
-                        ))}
+                    {renderPostulerButton(mission.id, userMissions)}
                 </CardActions>
                 </Card>
             </Grid>
@@ -278,6 +285,11 @@ return (
         <Snackbar open={applySuccess} autoHideDuration={6000} onClose={handleClose}>
             <Alert onClose={handleClose} severity="success">
                 Inscription réussie
+            </Alert>
+        </Snackbar>
+        <Snackbar open={cancelSuccess} autoHideDuration={6000} onClose={handleClose}>
+            <Alert onClose={handleClose} severity="success">
+                Inscription annulée
             </Alert>
         </Snackbar>
         </Container>
