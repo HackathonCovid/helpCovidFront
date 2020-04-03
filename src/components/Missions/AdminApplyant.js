@@ -66,6 +66,8 @@ export default function About() {
         
     }, id)
 
+    console.log(appliants)
+
     return (
     <div className={classes.root}>
         <React.Fragment>
@@ -78,12 +80,13 @@ export default function About() {
             <CardContent>
             <List>
                 {appliants && appliants.map((appliant) => (
+                    
                 <ListItem className={classNames(classes.item)}>
                     <ListItemAvatar>
                         <AccountBoxIcon/>
                     </ListItemAvatar>
                     <ListItemText
-                    primary={appliant.user.firstname + ' ' + appliant.user.lastname}
+                    primary={appliant.mission.author.firstname + '' + appliant.mission.author.lastname}
                     />
                     <ListItemSecondaryAction>
                     <IconButton aria-label="delete">
