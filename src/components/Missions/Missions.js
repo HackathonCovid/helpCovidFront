@@ -241,7 +241,7 @@ return (
                 />
                 <CardMedia
                     className={classes.cardMedia}
-                    image="benevol.jpg"
+                    image="img.jpg"
                     title="Image title"
                 />
                 <CardContent className={classes.cardContent}>

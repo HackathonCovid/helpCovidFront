@@ -18,11 +18,6 @@ root: {
 menuButton: {
     marginRight: theme.spacing(2),
 },
-buttonhover: {
-    '&:hover': {
-        background: "#009FFF",
-        },
-},
 title: {
     flexGrow: 1,
     '&:hover': {
