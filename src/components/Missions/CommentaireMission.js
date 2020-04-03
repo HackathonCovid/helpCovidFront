@@ -2,8 +2,7 @@ import React, { useEffect } from 'react';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, withTheme } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import Grid from '@material-ui/core/Grid';
+import TextField from '@material-ui/core/TextField';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
@@ -18,12 +17,18 @@ import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import { red } from '@material-ui/core/colors';
 import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { TextareaAutosize } from '@material-ui/core';
+import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu';
+
 
 import {entrypoint} from "../../entrypoint";
+
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -57,6 +62,18 @@ export default function About() {
     let { id } = useParams();
     const user = JSON.parse(localStorage.getItem("user"));
     const [expanded, setExpanded] = React.useState(false);
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
+    const [success, setSuccess] = React.useState(false);
+
+    const handleMenu = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
@@ -97,27 +114,52 @@ export default function About() {
         .then((data) => setComments(data.response));
         
     }, id)
-   
+
+    function deleteCom(idc) {
+        fetch(`${entrypoint}/api/comments/${idc}` , {
+        method: 'DELETE',
+        headers: {
+            'authorization': 'Bearer '+ user.token,
+        },
+        })
+        .then((resp) => resp.json())
+        .then((data) => {
+        if(data) {
+            setSuccess(true);
+        }
+        })
+    }
+
     return (
     <div className={classes.root}>
         <React.Fragment>
     <CssBaseline />
+    { success &&
+            <Snackbar open={success} autoHideDuration={6000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity="success">
+                    Commentaire supprimé !
+                </Alert>
+            </Snackbar>
+        }
         <Card className={classNames(classes.commentaire, classes.margint2)}>
         <CardActions className={classNames(classes.margin, classes.padding, classes.center)}>
-            <TextareaAutosize
-            rowsMin={4} 
-            cols="120"
-            size="large"
-                aria-label="maximum height"
-                placeholder="Comment"
-                onChange={onchangevalue}
+            <TextField
+            required
+            fullWidth
+            id="outlined-multiline-static"
+            label="Commentaire"
+            multiline
+            rows="4"
+            defaultValue=""
+            variant="outlined"
+            onChange={onchangevalue}
             />
         </CardActions>
 
             <CardActions className={classNames(classes.margin, classes.padding, classes.center)}>
             <Button variant="contained" size="small" color="grey" className={classNames(classes.margin, classes.padding)}
             onClick={addComment}>
-            Je postule !
+            Commenter
             </Button>
             </CardActions>
         </Card>
@@ -130,22 +172,37 @@ export default function About() {
                     <Card>
                         <CardHeader
                             avatar={
-                            <Avatar aria-label="recipe" className={classes.avatar}>
-                                {comment.user.lastname}
-                            </Avatar>
+                                <Avatar src="/broken-image.jpg" />
                             }
                             action={
-                            <IconButton aria-label="settings">
+                            <IconButton aria-label="settings" onClick={handleMenu}>
                                 <MoreVertIcon />
                             </IconButton>
                             }
-                            title="Shrimp and Chorizo Paella"
-                            subheader="September 14, 2016"
+                            title={user.firstname}
+                            subheader={user.lastname}
                         />
+                        <Menu
+                            id="menu-appbar"
+                            anchorEl={anchorEl}
+                            anchorOrigin={{
+                            vertical: 'top',
+                            horizontal: 'right',
+                            }}
+                            keepMounted
+                            transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'right',
+                            }}
+                            open={open}
+                            onClose={handleClose}
+                        >
+                            <MenuItem onClick={() => {deleteCom(comment.id)}}>Supprimer</MenuItem>
+                        </Menu>
                         <CardMedia
                             className={classes.media}
                             image="/static/images/cards/paella.jpg"
-                            title="Paella dish"
+                            title="picto"
                         />
                         <CardContent>
                             <Typography variant="body2" color="textSecondary" component="p">
