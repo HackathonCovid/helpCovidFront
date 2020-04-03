@@ -6,12 +6,9 @@ import Link from '@material-ui/core/Link';
 
 function Copyright() {
 return (
-    <Typography variant="body2" color="textSecondary">
-    {'Copyright © '}
-    <Link color="inherit" href="#">
-        HACKATHON 2020 - ESGI
-    </Link>{' '}
-    {new Date().getFullYear()}
+    <Typography variant="body2">
+    {'Copyright © HACKATHON 2020 - ESGI '}
+    
     {'.'}
     </Typography>
 );
@@ -21,8 +18,11 @@ const useStyles = makeStyles((theme) => ({
     footer: {
         padding: theme.spacing(3, 2),
         marginTop: 'auto',
-        backgroundColor:
-        theme.palette.type === 'light' ? theme.palette.grey[200] : theme.palette.grey[800],
+        backgroundColor: '#23272A',
+        color : '#FFFFFF',
+    },
+    white: {
+        color : '#FFFFFF',
     },
     }));
 
@@ -32,12 +32,11 @@ const classes = useStyles();
 return (
     <footer className={classes.footer}>
         <Container maxWidth="sm">
-        <Typography variant="body1">Support us on : 
-        <Link color="inherit" href="https://github.com/HackathonCovid">
-                GITHUB
-        </Link>{' '}
+        <Typography variant="body2">Réalisé par :
         </Typography>
-        <Copyright />
+        <Typography variant="body2">Walid Mouhsin, Muhammad Tounsi, Kosseyla Hammouche, Hugo Chea, Ayman Zair
+        </Typography>
+        <Copyright className={classes.white}/>
         </Container>
     </footer>
 );

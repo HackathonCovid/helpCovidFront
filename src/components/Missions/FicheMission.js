@@ -11,6 +11,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import Button from '@material-ui/core/Button';
 import classNames from 'classnames';
 import { useParams } from "react-router-dom";
+import Avatar from '@material-ui/core/Avatar';
 import CommentaireMission from './CommentaireMission';
 
 
@@ -37,9 +38,16 @@ const useStyles = makeStyles((theme) => ({
     center: {
         textAlign: 'center',
     },
+    bgred: {
+        backgroundColor : '#ec2F4B',
+        color : 'white',
+    },
+    justify: {
+        textAlign : 'justify',
+    },
     }));
 
-export default function About() {
+export default function FicheMission() {
     
 const classes = useStyles();
 const [mission, setMission] = React.useState('');
@@ -63,6 +71,18 @@ useEffect(() => {
 }
 }, [id])
 
+function calculateDateDuration(departDate, endDate){
+    if (departDate != null && endDate != null){
+        const date1 = new Date(departDate.substr(0,10));
+        const date2 = new Date(endDate.substr(0,10));
+        const diffTime = Math.abs(date2 - date1);
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+        
+        return diffDays;
+    }
+    
+}
+
 console.log(mission);
 console.log(author);
 return (
@@ -73,37 +93,114 @@ return (
     <Container maxWidth="md">
     
         <Card className={classNames(classes.main, classes.margint2)}>
+            <CardHeader className={classNames(classes.bgred, classes.center)}
+                title= {mission.title}
+            />
             <CardContent>
-                <Typography variant="h2" component="h1" gutterBottom className={classNames(classes.blue, classes.center)}>
-                {mission.title}
-                </Typography>
-                <Typography variant="body1">
-                Responsable : {mission.author_id}
-                </Typography>
-                <Typography variant="body1">
-                Crée le : {mission.created_at != null && mission.created_at.substr(0, 10)}
-                </Typography>
-                <Typography variant="body1">
-                Durée : {mission.nb_days} jour(s)
-                </Typography>
-                <Typography variant="body1">
-                Adresse : {mission.address_hospital}
-                </Typography>
-                <Typography variant="body1">
-                Nombre de bénévoles souhaité(s) : {mission.nb_people_required}
-                </Typography>
-                <Typography variant="body1">
-                De nuit : {mission.night_or_day == "Day" && <strong>Non</strong>} {mission.night_or_day == "Night" && <strong>Oui</strong>}
-                </Typography>
-                <Typography variant="body1">
-                Compétence requise ? : {mission.skills_required}
-                </Typography>
-                <Typography variant="body1">
-                Description :
-                </Typography>
-                <Typography variant="body1">
-                {mission.description}
-                </Typography>
+                <Grid container maxWidth="sm" className={classNames(classes.margin)}>
+                    <Grid item xs={false} sm={1} md={1} direction="row" justify="center" alignItems="center">
+                        
+                            <Avatar src="/broken-image.jpg"/>
+                        
+                    </Grid>
+                    <Grid container item xs={11} sm={11} md={11} direction="row" justify="start" alignItems="start">
+                       
+                        <Typography variant="body1">
+                        Responsable : {mission.author != null && mission.author.firstname + ' ' + mission.author.lastname}
+                        </Typography>
+                       
+                    </Grid>
+                </Grid>
+                
+                <Grid container maxWidth="sm" className={classNames(classes.margin)}>
+                    <Grid item xs={6} sm={6} md={6} direction="row" justify="center" alignItems="center">
+                        
+                    <Typography variant="body1">
+                    Crée le : {mission.created_at != null && mission.created_at.substr(0, 10)}
+                    </Typography>
+                        
+                    </Grid>
+                    <Grid container item xs={6} sm={6} md={6} direction="row" justify="start" alignItems="start">
+                       
+                        <Typography variant="body1">
+                        Durée : {/*mission.nb_days*/}{calculateDateDuration(mission.start_date, mission.end_date)} jour(s) 
+                        </Typography>
+                       
+                    </Grid>
+                </Grid>
+                
+                <Grid container maxWidth="sm" className={classNames(classes.margin)}>
+                    <Grid item xs={6} sm={6} md={6} direction="row" justify="center" alignItems="center">
+                        
+                    <Typography variant="body1">
+                    Adresse : {mission.address_hospital}
+                    </Typography>
+                        
+                    </Grid>
+                    <Grid container item xs={6} sm={6} md={6} direction="row" justify="start" alignItems="start">
+                       
+                    <Typography variant="body1">
+                    Nombre de bénévoles souhaité(s) : {mission.nb_people_required}
+                    </Typography>
+                       
+                    </Grid>
+                </Grid>
+
+                <Grid container maxWidth="sm" className={classNames(classes.margin)}>
+                    <Grid item xs={6} sm={6} md={6} direction="row" justify="center" alignItems="center">
+                        
+                    <Typography variant="body1">
+                    Mission de {mission.night_or_day}
+                    </Typography>
+                        
+                    </Grid>
+                    <Grid container item xs={6} sm={6} md={6} direction="row" justify="start" alignItems="start">
+ 
+                    </Grid>
+                </Grid>
+                
+                <Grid container maxWidth="sm" className={classNames(classes.margin)}>
+                    <Grid item xs={12} sm={12} md={12} direction="row" justify="center" alignItems="center">
+                        
+                    <Typography variant="body1">
+                    Compétence requise ? :
+                    </Typography>
+                        
+                    </Grid>
+                </Grid>
+                
+                <Grid container maxWidth="sm" className={classNames(classes.margin)}>
+                    <Grid item xs={12} sm={12} md={12} direction="row" justify="center" alignItems="center" className={classes.justify}>
+                        
+                    <Typography variant="body1">
+                    {mission.skills_required}
+                    </Typography>
+                        
+                    </Grid>
+                </Grid>
+
+                <Grid container maxWidth="sm" className={classNames(classes.margin)}>
+                    <Grid item xs={12} sm={12} md={12} direction="row" justify="center" alignItems="center" className={classNames(classes.margin)}>
+                        
+                    <Typography variant="body1">
+                    <strong>Description :</strong>
+                    </Typography>
+                        
+                    </Grid>
+                </Grid>
+                
+                <Grid container maxWidth="sm" className={classNames(classes.margin)}>
+                    <Grid item xs={12} sm={12} md={12} direction="row" justify="center" alignItems="center" className={classes.justify}>
+                        
+                    <Typography variant="body1">
+                    {mission.description}
+                    </Typography>
+                        
+                    </Grid>
+                </Grid>
+                
+                
+                
                 
             </CardContent>
             <CardActions className={classNames(classes.margin, classes.padding, classes.center)}>

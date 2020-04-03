@@ -46,7 +46,7 @@ return (
     <AppBar position="static">
         <Toolbar>
 
-        <Typography variant="h6" className={classes.title}>
+        <Typography variant="h6" className={classes.title} onClick={() => { history.push('/')}}>
         Santé&benev
         </Typography>
 
@@ -79,6 +79,7 @@ return (
             >
                 <MenuItem onClick={() => { history.push('/profil')}}>Mon profil</MenuItem>
                 <MenuItem onClick={() => {history.push('/mesmissions')}}>Mes missions</MenuItem>
+                <MenuItem onClick={() => {history.push('/changerMdp')}}>Changer mon mot de passe</MenuItem>
                 <MenuItem onClick={() => { localStorage.removeItem('user'); history.push('/'); } }>Se déconecter</MenuItem>
             </Menu>
             </div>

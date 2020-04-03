@@ -72,10 +72,10 @@ export default function SignUp() {
     const classes = useStyles();
     let { benevole } = useParams();
 
-    if (benevole == "benevole"){
+    if (benevole === "benevole"){
         is_volunteer = 1;
     }
-    else if (benevole == "soignant"){
+    else if (benevole === "soignant"){
         is_volunteer = 0;
     }
     else{
@@ -142,8 +142,8 @@ export default function SignUp() {
                                 variant="outlined"
                                 required
                                 fullWidth
-                                id="firstName"
-                                label="First Name"
+                                id="First name"
+                                label="Prénom"
                                 value={firstname}
                                 onChange={e => setFirstname(e.target.value)}
                                 autoFocus
@@ -155,13 +155,14 @@ export default function SignUp() {
                                 required
                                 fullWidth
                                 id="lastName"
-                                label="Last Name"
+                                label="Nom"
                                 name="lastName"
                                 value={lastname}
                                 onChange={e => setLastname(e.target.value)}
                                 autoComplete="lastname"
                             />
                         </Grid>
+                        {benevole == "soignant" && (
                         <Grid item xs={12} sm={6}>
                             <TextField
                                 id="type orga"
@@ -179,6 +180,8 @@ export default function SignUp() {
                                 ))}
                             </TextField>
                         </Grid>
+                        )}
+                        {benevole == "soignant" && (
                         <Grid item xs={12} sm={6}>
                             <TextField
                                 variant="outlined"
@@ -192,7 +195,7 @@ export default function SignUp() {
                                 onChange={e => setOrganame(e.target.value)}
                             />
                         </Grid>
-
+                        )}
                         <Grid item xs={12}>
                             <TextField
                                 variant="outlined"
@@ -212,9 +215,9 @@ export default function SignUp() {
                                 required
                                 fullWidth
                                 id="city"
-                                label="city"
+                                label="Ville"
                                 name="city"
-                                autoComplete="city"
+                                autoComplete="Ville"
                                 value={city}
                                 onChange={e => setCity(e.target.value)}
                             />
@@ -265,7 +268,7 @@ export default function SignUp() {
                                 required
                                 fullWidth
                                 id="password"
-                                label="password"
+                                label="Mot de passe"
                                 name="password"
                                 type="password"
                                 autoComplete="password"
@@ -282,12 +285,12 @@ export default function SignUp() {
                         color="primary"
                         className={classes.submit}
                     >
-                        Sign Up
+                        S'enregistrer
                     </Button>
                     <Grid container justify="flex-end">
                         <Grid item>
                             <Link href="/login" variant="body2">
-                                Already have an account? Sign in
+                                Se connecter ?
                             </Link>
                         </Grid>
                     </Grid>

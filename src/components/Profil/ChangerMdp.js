@@ -48,27 +48,13 @@ const useStyles = makeStyles(theme => ({
         margin: theme.spacing(3, 0, 2),
     },
 }));
-const sexes = [
-    {
-        value: 'Homme',
-        label: 'H',
-    },
-    {
-        value: 'Femme',
-        label: 'F',
-    },
-];
 
-export default function UserProfil() {
+export default function ChangerMdp() {
     const data = JSON.parse(localStorage.getItem('user'));
     const token = data.token;
-    const [firstname, setFirstname] = React.useState(data.firstname);
-    const [lastname, setLastname] = React.useState(data.lastname);
     const [email, setEmail] = React.useState(data.email);
-    const [city, setCity] = React.useState(data.city);
-    const [phone_number, setPhoneNumber] = React.useState(data.phone_number);
-    const [description, setDescription] = React.useState(data.description);
-    const [adress, setAdress] = React.useState(data.adress);
+    const [new_password, setNewPassword] = React.useState('');
+    const [current_password, setCurrentPassword]= React.useState('');
     const [updateSuccess, setUpdateSuccess] = React.useState(false);
     const classes = useStyles();
 
@@ -79,7 +65,7 @@ export default function UserProfil() {
         setUpdateSuccess(false);
     };
 
-    function updateUser(e) {
+    function updateMdp(e) {
         e.preventDefault();
         e.stopPropagation();
 
@@ -91,13 +77,9 @@ export default function UserProfil() {
                 'authorization': 'Bearer ' + token,
             },
             body: JSON.stringify({
-                lastname,
-                firstname,
                 email,
-                city,
-                phone_number,
-                adress,
-                description,
+                current_password,
+                new_password,
             }),
         })
             .then((response) => response.json())
@@ -105,8 +87,8 @@ export default function UserProfil() {
                 if(data.status === 200) {
                     setUpdateSuccess(true);
                     data.response.token = token;
-                    localStorage.setItem('user', JSON.stringify(data.response));
-                    history.push('/profil');
+                    localStorage.removeItem('user');
+                    history.push('/login');
                 }
             })
             .catch((error) => {
@@ -124,88 +106,37 @@ export default function UserProfil() {
                 </Avatar>
 
                 <Typography component="h1" variant="h5">
-                    Profil utilisateur
+                    Changer mon mot de passe
                 </Typography>
 
-                <form className={classes.form} onSubmit={updateUser}>
+                <form className={classes.form} onSubmit={updateMdp}>
                     <Grid container spacing={2}>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                autoComplete="firstname"
-                                name="firstName"
-                                variant="outlined"
-                                required
-                                fullWidth
-                                id="firstName"
-                                label="Prénom"
-                                value={firstname}
-                                onChange={e => setFirstname(e.target.value)}
-                                autoFocus
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                variant="outlined"
-                                required
-                                fullWidth
-                                id="lastName"
-                                label="Nom"
-                                name="lastName"
-                                value={lastname}
-                                onChange={e => setLastname(e.target.value)}
-                                autoComplete="lastname"
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                variant="outlined"
-                                required
-                                fullWidth
-                                id="adresse"
-                                label="adresse"
-                                name="adresse"
-                                autoComplete="adresse"
-                                value={adress}
-                                onChange={e => setAdress(e.target.value)}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                variant="outlined"
-                                required
-                                fullWidth
-                                id="city"
-                                label="Ville"
-                                name="city"
-                                autoComplete="Ville"
-                                value={city}
-                                onChange={e => setCity(e.target.value)}
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
+                    <Grid item xs={12}>
                             <TextField
                                 variant="outlined"
                                 required
                                 fullWidth
                                 id="email"
-                                label="Email"
+                                label="email"
                                 name="email"
                                 autoComplete="email"
                                 value={email}
                                 onChange={e => setEmail(e.target.value)}
                             />
                         </Grid>
+                        
                         <Grid item xs={12}>
                             <TextField
                                 variant="outlined"
                                 required
                                 fullWidth
-                                id="descritpion"
-                                label="description"
-                                name="description"
-                                autoComplete="description"
-                                value={description}
-                                onChange={e => setDescription(e.target.value)}
+                                id="current_password"
+                                label="Mot de passe actuel"
+                                name="current_password"
+                                autoComplete="current_password"
+                                type="password"
+                                value={current_password}
+                                onChange={e => setCurrentPassword(e.target.value)}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -213,12 +144,13 @@ export default function UserProfil() {
                                 variant="outlined"
                                 required
                                 fullWidth
-                                id="téléphone"
-                                label="téléphone"
-                                name="téléphone"
-                                autoComplete="phone_number"
-                                value={phone_number}
-                                onChange={e => setPhoneNumber(e.target.value)}
+                                id="new_password"
+                                label="Nouveau mot de passe"
+                                name="new_password"
+                                autoComplete="new_password"
+                                type="password"
+                                value={new_password}
+                                onChange={e => setNewPassword(e.target.value)}
                             />
                         </Grid>
                     </Grid>
@@ -229,12 +161,12 @@ export default function UserProfil() {
                         color="primary"
                         className={classes.submit}
                     >
-                        Modifier
+                        Modifier mon mot de passe
                     </Button>
                 </form>
                 <Snackbar open={updateSuccess} autoHideDuration={6000} onClose={handleClose}>
                     <Alert onClose={handleClose} severity="success">
-                        Profil mis à jour !
+                        Mot de passé modifié avec succès !
                     </Alert>
                 </Snackbar>
             </div>

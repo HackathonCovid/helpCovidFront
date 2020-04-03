@@ -80,7 +80,16 @@ align: {
 display: 'flex',
 'align-items': 'center',
 'justify-content': 'center',
-}
+},
+margin: {
+position: 'fixed',
+bottom: '1%',
+right: '1%',
+'z-index': '9999',
+},
+btnMission: {
+    'margin-bottom': theme.spacing(3),
+},
 }));
 
 
@@ -88,6 +97,9 @@ export default function Missions() {
 const classes = useStyles();
 const userData = JSON.parse(localStorage.getItem('user'));
 const [missions, setMissions] = React.useState('');
+const usrS = React.useState(JSON.parse(localStorage.getItem('user')))
+const isv = (usrS[0]!= undefined)?usrS[0].is_volunteer :undefined;
+const is_volunt = (isv)? isv[0]:undefined ;
 const [applySuccess, setApplySuccess] = React.useState(false);
 const [userMissions, setUserMissions] = React.useState('');
 
@@ -99,6 +111,21 @@ const handleClose = (event, reason) => {
     setApplySuccess(false);
 };
 
+useEffect(() => {
+    fetch(`${entrypoint}/api/missions`,{
+    methode : 'GET'
+    })
+    .then((resp) => resp.json())
+    .then((data) => setMissions(data.response));
+},[missions.id]);
+
+function calculateDateDuration(departDate, endDate){
+    const date1 = new Date(departDate.substr(0,10));
+    const date2 = new Date(endDate.substr(0,10));
+    const diffTime = Math.abs(date2 - date1);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays;
+}
     useEffect(() => {
         fetch(`${entrypoint}/api/missions`,{
         method : 'GET'
@@ -179,6 +206,13 @@ return (
     <CssBaseline />
     <main>
         <Container className={classes.cardGrid} maxWidth="md">
+        {is_volunt && is_volunt == 0 &&
+        <Grid container direction="row" justify="end" alignItems="end">
+            <Button href="/mission/add" className={classes.btnMission} variant="contained" size="medium" color="primary">
+            Créer une mission
+            </Button>
+        </Grid>
+    }
         <Grid container spacing={4}>
             {missions && missions.map((mission) => (
             <Grid item key={mission.id} xs={12} sm={6} md={4}>
@@ -205,22 +239,22 @@ return (
                     <Typography variant="h6" component="h2">
                     {'Description :'}
                     </Typography>
-                    <Typography gutterBottom>
-                    {mission.description.length > 60 && mission.description.substr(0, 60)}
-                    {mission.description.length < 61 && mission.description}
+                    <Typography variant="body2" gutterBottom>
+                    {mission.description.length > 120 && mission.description.substr(0, 120) + "..."}
+                    {mission.description.length < 121 && mission.description}
                     </Typography>
 
                     <Typography variant="h6" component="h2" className={classNames(classes.borderT)}>
                     {'Détails'}
                     </Typography>
                     <Typography>
-                    Durée : {mission.nb_days} jour(s)
+                    Durée : {/*mission.nb_days*/}{calculateDateDuration(mission.start_date, mission.end_date)} jour(s)
                     </Typography>
                     <Typography>
                     Compétences requises : {mission.skills_required}
                     </Typography>
                     <Typography>
-                    Mission de  {mission.night_or_day == "Day" && <strong>Jour</strong>} {mission.night_or_day == "Night" && <strong>Nuit</strong>}
+                    Mission de <strong>{mission.night_or_day != null && mission.night_or_day.toLowerCase()}</strong>
                     </Typography>
                     <Typography variant="body2" className={classNames(classes.italic, classes.right, classes.note)}>
                     Postée le : {mission.created_at != null && mission.created_at.substr(0, 10)}
@@ -248,9 +282,11 @@ return (
         </Snackbar>
         </Container>
     </main>
+    {is_volunt && is_volunt == 0 &&
     <Fab onClick= {() =>(history.push('/mission/add'))} color="primary" aria-label="add" className={classes.margin}>
             <AddIcon />
-    </Fab>
+        </Fab>
+    }
     </React.Fragment>
 );
 }
