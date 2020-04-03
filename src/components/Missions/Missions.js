@@ -17,6 +17,12 @@ import classNames from 'classnames';
 
 import history from '../../history';
 import {entrypoint} from "../../entrypoint";
+import MuiAlert from "@material-ui/lab/Alert";
+import Snackbar from "@material-ui/core/Snackbar";
+
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const useStyles = makeStyles((theme) => ({
 center: {
@@ -89,9 +95,38 @@ btnMission: {
 
 export default function Missions() {
 const classes = useStyles();
+const userData = JSON.parse(localStorage.getItem('user'));
 const [missions, setMissions] = React.useState('');
 const usrS = React.useState(JSON.parse(localStorage.getItem('user')))
 const isv = (usrS[0]!= undefined)?usrS[0].is_volunteer :undefined;
+const is_volunt = (isv)? isv[0]:undefined ;
+const [applySuccess, setApplySuccess] = React.useState(false);
+const [cancelSuccess, setCancelSuccess] = React.useState(false);
+const [userMissions, setUserMissions] = React.useState('');
+const renderPostulerButton = (missionId, userMissions) => {
+    for(let i = 0 ; i < userMissions.length; i++){
+        if(userMissions[i].mission_id === missionId){
+            return(
+                <Button size="small" color="primary" onClick={() => (removeApplyMission(userMissions[i].id, i))}>
+                    Annuler
+                </Button>
+            )
+        }
+    }
+    return(
+        <Button size="small" color="primary" onClick={() => (applyMission(missionId))}>
+            Postuler
+        </Button>
+    )
+};
+
+
+const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+        return;
+    }
+    setApplySuccess(false);
+};
 let   isvolunt = false;
 if(isv == 0){
     isvolunt = true;
@@ -110,9 +145,78 @@ function calculateDateDuration(departDate, endDate){
     const date1 = new Date(departDate.substr(0,10));
     const date2 = new Date(endDate.substr(0,10));
     const diffTime = Math.abs(date2 - date1);
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     return diffDays;
 }
+    useEffect(() => {
+        fetch(`${entrypoint}/api/missions`,{
+        method : 'GET'
+        })
+        .then((resp) => resp.json())
+        .then((data) => setMissions(data.response));
+    },[missions.id]);
+
+    useEffect(() => {
+        fetch(`${entrypoint}/api/userapplies/${userData.id}`,{
+            method : 'GET'
+        })
+            .then((resp) => resp.json())
+            .then((data) => setUserMissions(data.response));
+    },[]);
+
+    function applyMission(missionId) {
+
+        const applyId = userData.id;
+        fetch(`${entrypoint}/api/applies/${missionId}`, {
+            method: 'POST',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'authorization': 'Bearer ' + userData.token,
+            },
+            body: JSON.stringify({
+                applyId,
+                missionId
+            }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                if(data.status === 201) {
+                    window.location.reload();
+                    setApplySuccess(true);
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
+
+    function removeApplyMission(missionId, i) {
+
+        const applyId = userData.id;
+        fetch(`${entrypoint}/api/applies/${missionId}`, {
+            method: 'DELETE',
+            headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                'authorization': 'Bearer ' + userData.token,
+            },
+            body: JSON.stringify({
+                applyId,
+                missionId
+            }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                if(data.status === 200) {
+                    window.location.reload();
+                    setCancelSuccess(true);
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    }
 
 return (
     <React.Fragment>
@@ -139,7 +243,6 @@ return (
                     title="Image title"
                 />
                 <CardContent className={classes.cardContent}>
-                    
                     <Typography className={classNames(classes.align, classes.marginb)}>
                     <Grid container direction="row" justify="center" alignItems="center">
                         <Grid container item xs={3} direction="row" justify="center" alignItems="center">
@@ -149,7 +252,6 @@ return (
                             Contact : {mission.author.firstname} {mission.author.lastname}
                         </Grid>
                     </Grid>
-                    
                     </Typography>
                     <Typography variant="h6" component="h2">
                     {'Description :'}
@@ -163,7 +265,7 @@ return (
                     {'Détails'}
                     </Typography>
                     <Typography>
-                    Durée : {/*mission.nb_days*/}{calculateDateDuration(mission.start_date, mission.end_date)} jour(s) 
+                    Durée : {/*mission.nb_days*/}{calculateDateDuration(mission.start_date, mission.end_date)} jour(s)
                     </Typography>
                     <Typography>
                     Compétences requises : {mission.skills_required}
@@ -179,14 +281,22 @@ return (
                     <Button href={"/mission/fiche/" + mission.id} size="small" color="primary">
                     Voir
                     </Button>
-                    <Button size="small" color="primary">
-                    Postuler
-                    </Button>
+                    {renderPostulerButton(mission.id, userMissions)}
                 </CardActions>
                 </Card>
             </Grid>
             ))}
         </Grid>
+        <Snackbar open={applySuccess} autoHideDuration={6000} onClose={handleClose}>
+            <Alert onClose={handleClose} severity="success">
+                Inscription réussie
+            </Alert>
+        </Snackbar>
+        <Snackbar open={cancelSuccess} autoHideDuration={6000} onClose={handleClose}>
+            <Alert onClose={handleClose} severity="success">
+                Inscription annulée
+            </Alert>
+        </Snackbar>
         </Container>
     </main>
     {isvolunt &&
