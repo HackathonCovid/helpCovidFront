@@ -77,7 +77,7 @@ export default function App() {
         <NonProtectedRoute path="/mission/fiche/:id" component={FicheMission} />
         <ProtectedRoute path="/mission/add" component={AddMission} />
         <ProtectedRoute path="/Mesmissions" component={MesMissions} />
-        <ProtectedRoute path="/Mesmissions/benev" component={MesMissionsApp} />
+        <ProtectedRoute path="/Mesmissionsbenev" component={MesMissionsApp} />
         <ProtectedRoute path="/mission/update" component={UpdateMission} />
         <ProtectedRoute path="/profil" component={Profile} />
         <ProtectedRoute path="/changerMdp" component={ChangerMdp} />
