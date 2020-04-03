@@ -14,6 +14,7 @@ import AddMission from './components/Missions/AddMission';
 import UpdateMission from './components/Missions/UpdateMission';
 import MesMissions from './components/Missions/MesMissions';
 import FicheMission from './components/Missions/FicheMission';
+import Messagerie from './components/Messagerie/Messagerie';
 
 
 import history from './history.js';
@@ -78,6 +79,7 @@ export default function App() {
         <ProtectedRoute path="/Mesmissions" component={MesMissions} />
         <ProtectedRoute path="/mission/update" component={UpdateMission} />
         <ProtectedRoute path="/profil" component={Profile} />
+        <ProtectedRoute path="/messagerie" component={Messagerie} />
       </Router>
   );
 }
