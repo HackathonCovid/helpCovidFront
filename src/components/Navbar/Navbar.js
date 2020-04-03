@@ -18,11 +18,6 @@ root: {
 menuButton: {
     marginRight: theme.spacing(2),
 },
-buttonhover: {
-    '&:hover': {
-        background: "#009FFF",
-        },
-},
 title: {
     flexGrow: 1,
     '&:hover': {
@@ -58,16 +53,16 @@ return (
         Santé&benev
         </Typography>
 
+        <Button color="inherit" href="/">Home</Button>
+            {!localStorage.getItem('user') && (
+            <Button color="inherit" href="/register/benevole">Devenir bénévole</Button>
+            )}
+            {!localStorage.getItem('user') && (
+            <Button color="inherit" href="/register/soignant">J'ai une mission</Button>
+            )}
         {localStorage.getItem('user') && (
             <div>
-            <Button className={classes.buttonhover} color="inherit" href="/">Home</Button>
-            {!localStorage.getItem('user') && (
-            <Button className={classes.buttonhover} color="inherit" href="/register/benevole">Devenir bénévole</Button>
-            )}
-            {!localStorage.getItem('user') && (
-            <Button className={classes.buttonhover} color="inherit" href="/register/soignant">J'ai une mission</Button>
-            )}
-            <Button className={classes.buttonhover} color="inherit" href="/missions">Nos missions</Button>
+            <Button color="inherit" href="/missions">Nos missions</Button>
             <IconButton
                 aria-label="account of current user"
                 aria-controls="menu-appbar"

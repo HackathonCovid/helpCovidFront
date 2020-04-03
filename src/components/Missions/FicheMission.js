@@ -205,6 +205,7 @@ return (
                 
             </CardContent>
             <CardActions className={classNames(classes.margin, classes.padding, classes.center)}>
+                
             <Button variant="contained" size="small" color="secondary" className={classNames(classes.margin, classes.padding)}>
             Je postule !
             </Button>
