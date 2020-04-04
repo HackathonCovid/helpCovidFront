@@ -23,6 +23,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 
 
 import {entrypoint} from "../../entrypoint";
+import { Grid } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -48,6 +49,14 @@ const useStyles = makeStyles((theme) => ({
         '&:hover': {
             background: "#ECE8E7",
             },
+    },
+    buttonres: {
+        [theme.breakpoints.down('sm')]: {
+            
+          },
+          [theme.breakpoints.up('md')]: {
+            
+          },
     }
     }));
 
@@ -112,15 +121,20 @@ export default function About() {
                 {appliants && appliants.map((appliant) => (
                     
                 <ListItem className={classNames(classes.item)}>
-                    <ListItemAvatar>
-                        <AccountBoxIcon/>
-                    </ListItemAvatar>
-                    <ListItemText
+                    <Grid>
+                    <Grid item xs={6} sm={3} md={2}>
+                        <ListItemAvatar>
+                            <AccountBoxIcon/>
+                        </ListItemAvatar>
+                    </Grid>
+                    <Grid item xs={6} sm={6} md={8}>
+                    <ListItemText 
                     primary={"Nom : " +appliant.user.firstname + ', Prénom : ' + appliant.user.lastname + ', Numéro de tel : ' +appliant.user.phone_number} 
                     />
-                    
-                        {appliant.validate ===0 && 
-                            <ListItemSecondaryAction>
+                    </Grid>
+                    <Grid item xs={12} sm={3} md={2}>
+                    {appliant.validate ===0 && 
+                            <ListItemSecondaryAction className={classNames(classes.buttonres)}>
                                 <IconButton id={"val_"+appliant.id} onClick={(element) => {AccepteUser(element, appliant,1)}} aria-label="delete">
                                     <CheckCircleIcon />
                                 </IconButton>
@@ -130,7 +144,7 @@ export default function About() {
                             </ListItemSecondaryAction>
                         }
                         {appliant.validate ===1 &&
-                            <ListItemSecondaryAction>
+                            <ListItemSecondaryAction className={classNames(classes.buttonres)}>
                                 <IconButton id={"val_"+appliant.id} color="primary" onClick={(element) => {AccepteUser(element, appliant,1)}} aria-label="delete">
                                     <CheckCircleIcon />
                                 </IconButton>
@@ -140,7 +154,7 @@ export default function About() {
                             </ListItemSecondaryAction>
                         }
                         {appliant.validate ===2 &&
-                            <ListItemSecondaryAction>
+                            <ListItemSecondaryAction className={classNames(classes.buttonres)}>
                                 <IconButton id={"val_"+appliant.id}  onClick={(element) => {AccepteUser(element, appliant,1)}} aria-label="delete">
                                     <CheckCircleIcon />
                                 </IconButton>
@@ -149,9 +163,11 @@ export default function About() {
                                 </IconButton>
                             </ListItemSecondaryAction>
                         }
+                    </Grid>
+                    
+                    </Grid>
                 </ListItem>
-                ))}
-
+                ))}     
             </List>
             </CardContent>
             

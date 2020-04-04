@@ -27,6 +27,9 @@ const useStyles = makeStyles(theme => ({
             backgroundColor: theme.palette.common.white,
         },
     },
+    canvas: {
+        minHeight : '91vh',
+    },
     paper: {
         marginTop: theme.spacing(8),
         display: 'flex',
@@ -95,7 +98,7 @@ export default function ChangerMdp() {
     }
 
     return (
-        <Container component="main" maxWidth="xs">
+        <Container className={classes.canvas} component="main" maxWidth="xs">
             <CssBaseline />
 
             <div className={classes.paper}>
