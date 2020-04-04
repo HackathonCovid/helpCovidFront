@@ -65,8 +65,8 @@ return (
 
         {localStorage.getItem('user') && (
             <div>
-            <Button className={classes.buttonhover} color="inherit" href="/">Accueil</Button>
-            <Button className={classes.buttonhover} color="inherit" href="/missions">Nos missions</Button>
+            <Button className={classes.buttonnav} color="inherit" href="/">Accueil</Button>
+            <Button color="inherit" href="/missions">Nos missions</Button>
             <IconButton
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
