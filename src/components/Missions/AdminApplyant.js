@@ -72,9 +72,11 @@ export default function About() {
         
     //element.target.style.backgroundColor = "green";
     if(validate ==1){
-        element.target.style.color = "green";
+        element.target.style.color = "#3f51b5";
+        document.getElementById("del_"+appliant.id).style.color="#0000008a";
     }else{
-    element.target.style.color = "red";
+        document.getElementById("val_"+appliant.id).style.color= '#0000008a';
+        element.target.style.color = "#f50057";
     }
         let id = appliant.id;
         let user_id = appliant.user_id;
@@ -114,16 +116,39 @@ export default function About() {
                         <AccountBoxIcon/>
                     </ListItemAvatar>
                     <ListItemText
-                    primary={appliant.user.firstname + '' + appliant.user.lastname}
+                    primary={appliant.user.firstname + '  ' + appliant.user.lastname + '. ' +appliant.user.phone_number} 
                     />
-                    <ListItemSecondaryAction>
-                    <IconButton  onClick={(element) => {AccepteUser(element, appliant,1)}} aria-label="delete">
-                        <CheckCircleIcon />
-                    </IconButton>
-                    <IconButton onClick={(element) => {AccepteUser(element,appliant,2)}} aria-label="delete">
-                        <CancelIcon />
-                    </IconButton>
-                    </ListItemSecondaryAction>
+                    
+                        {appliant.validate ===0 && 
+                            <ListItemSecondaryAction>
+                                <IconButton id={"val_"+appliant.id} onClick={(element) => {AccepteUser(element, appliant,1)}} aria-label="delete">
+                                    <CheckCircleIcon />
+                                </IconButton>
+                                <IconButton id={"del_"+appliant.id} onClick={(element) => {AccepteUser(element,appliant,2)}} aria-label="delete">
+                                    <CancelIcon />
+                                </IconButton>
+                            </ListItemSecondaryAction>
+                        }
+                        {appliant.validate ===1 &&
+                            <ListItemSecondaryAction>
+                                <IconButton id={"val_"+appliant.id} color="primary" onClick={(element) => {AccepteUser(element, appliant,1)}} aria-label="delete">
+                                    <CheckCircleIcon />
+                                </IconButton>
+                                <IconButton id={"del_"+appliant.id} onClick={(element) => {AccepteUser(element,appliant,2)}} aria-label="delete">
+                                    <CancelIcon />
+                                </IconButton>
+                            </ListItemSecondaryAction>
+                        }
+                        {appliant.validate ===2 &&
+                            <ListItemSecondaryAction>
+                                <IconButton id={"val_"+appliant.id}  onClick={(element) => {AccepteUser(element, appliant,1)}} aria-label="delete">
+                                    <CheckCircleIcon />
+                                </IconButton>
+                                <IconButton id={"del_"+appliant.id} color="secondary" onClick={(element) => {AccepteUser(element,appliant,2)}} aria-label="delete">
+                                    <CancelIcon />
+                                </IconButton>
+                            </ListItemSecondaryAction>
+                        }
                 </ListItem>
                 ))}
 
