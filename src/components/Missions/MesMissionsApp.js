@@ -11,7 +11,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
-
+import Box from '@material-ui/core/Box';
 import history from '../../history';
 import {entrypoint} from "../../entrypoint";
 
@@ -47,6 +47,12 @@ footer: {
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(6),
 },
+bgwhite: {
+    backgroundColor : '#FCFAFF',
+    padding: theme.spacing(2),
+    marginBottom : theme.spacing(8),
+    boxShadow : '0px 0px 2px black',
+},
 }));
 
 
@@ -59,7 +65,6 @@ const [userMissions, setUserMissions] = React.useState('');
 const [cancelSuccess, setCancelSuccess] = React.useState(false);
 const id = React.useState(JSON.parse(localStorage.getItem('user')).id);
 const author_id = id[0];
-
 const user = JSON.parse(localStorage.getItem("user"));
 
 const handleClose = (event, reason) => {
@@ -111,11 +116,17 @@ return (
     <CssBaseline />
     <main className={classes.canvas}>
         <Container className={classes.cardGrid} maxWidth="md">
-        <Grid container spacing={4}>
             {missions === undefined && 
                 <Typography variant="h5" className={classes.marginb}><p>Vous n'avez pas encore de mission !</p>
                 <p>Si vous souhaitez participer à la lutte contre le Covid-19, cette plateforme est pour vous ;)</p></Typography>
             }
+
+            <Box className={classes.bgwhite}>
+            {/* Mission validé*/missions && missions.length >0 &&
+            <Typography variant="h5" className={classes.marginb}><p>Missions validées :</p></Typography>
+            }
+            <Grid container spacing={4}>
+            
             {/* Mission validé*/missions && missions.length >0 && missions && missions.map((mission) => (
                   mission.validate === 1 &&<Grid item key={mission.id} xs={12} sm={6} md={4}>
                         <Card className={classes.card}>
@@ -151,6 +162,11 @@ return (
                     </Grid>
             ))}
         </Grid>
+        </Box>
+        <Box className={classes.bgwhite}>
+        {/* Mission validé*/missions && missions.length >0 &&
+            <Typography variant="h5" className={classes.marginb}><p>Missions en attente de validation :</p></Typography>
+        }
         <Grid container spacing={4}>
             {/* Mission Attente ou refusé*/missions && missions.length >0 && missions && missions.map((mission) => (
                   mission.validate !== 1 &&<Grid item key={mission.id} xs={12} sm={6} md={4}>
@@ -190,6 +206,7 @@ return (
                     </Grid>
             ))}
         </Grid>
+        </Box>
         </Container>
     </main>
     </React.Fragment>
