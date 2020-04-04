@@ -36,6 +36,9 @@ const useStyles = makeStyles((theme) => ({
     margint2: {
         marginTop : theme.spacing(2),
     },
+    margint3: {
+        marginTop : theme.spacing(4),
+    },
     center: {
         textAlign: 'center',
     },
@@ -71,6 +74,11 @@ useEffect(() => {
     .then((data) => setMission(data.response) && setAuthor(data.response.author));
 }
 }, [id])
+
+function lowerCase(wordLower){
+    var str = '' + wordLower;
+    return str.toLowerCase();
+}
 
 function calculateDateDuration(departDate, endDate){
     if (departDate != null && endDate != null){
@@ -116,115 +124,76 @@ return (
     
     <Container maxWidth="md">
     
-        <Card className={classNames(classes.main, classes.margint2)}>
+        <Card className={classNames(classes.main, classes.margint3)}>
             <CardHeader className={classNames(classes.bgred, classes.center)}
                 title= {mission.title}
             />
             <CardContent>
                 <Grid container maxWidth="sm" className={classNames(classes.margin)}>
-                    <Grid item xs={false} sm={1} md={1} direction="row" justify="center" alignItems="center">
-                        
+                    <Grid item xs={false} sm={1} md={1} direction="row" justify="start" alignItems="center">
                             <Avatar src="/broken-image.jpg"/>
-                        
                     </Grid>
-                    <Grid container item xs={11} sm={11} md={11} direction="row" justify="start" alignItems="start">
-                       
+                    <Grid container item xs={11} sm={11} md={11} direction="row" justify="start" alignItems="center">
                         <Typography variant="body1">
-                        Responsable : {mission.author != null && mission.author.firstname + ' ' + mission.author.lastname}
+                            Responsable : {mission.author != null && mission.author.firstname + ' ' + mission.author.lastname}
                         </Typography>
-                       
+                    </Grid>
+                </Grid>
+                
+                <Grid container maxWidth="sm" className={classNames(classes.margin, classes.margint2)}>
+                    <Grid item xs={6} sm={6} md={6} direction="row" justify="center" alignItems="center">
+                        <Typography variant="body1">
+                            Crée le : {mission.created_at != null && mission.created_at.substr(0, 10)}
+                        </Typography>  
+                    </Grid>
+                    <Grid container item xs={6} sm={6} md={6} direction="row" justify="start" alignItems="start">
+                        <Typography variant="body1">
+                            Durée : {calculateDateDuration(mission.start_date, mission.end_date)} jour(s) 
+                        </Typography>
                     </Grid>
                 </Grid>
                 
                 <Grid container maxWidth="sm" className={classNames(classes.margin)}>
                     <Grid item xs={6} sm={6} md={6} direction="row" justify="center" alignItems="center">
-                        
-                    <Typography variant="body1">
-                    Crée le : {mission.created_at != null && mission.created_at.substr(0, 10)}
-                    </Typography>
-                        
-                    </Grid>
-                    <Grid container item xs={6} sm={6} md={6} direction="row" justify="start" alignItems="start">
-                       
                         <Typography variant="body1">
-                        Durée : {/*mission.nb_days*/}{calculateDateDuration(mission.start_date, mission.end_date)} jour(s) 
+                            Adresse : {mission.address_hospital}
                         </Typography>
-                       
-                    </Grid>
-                </Grid>
-                
-                <Grid container maxWidth="sm" className={classNames(classes.margin)}>
-                    <Grid item xs={6} sm={6} md={6} direction="row" justify="center" alignItems="center">
-                        
-                    <Typography variant="body1">
-                    Adresse : {mission.address_hospital}
-                    </Typography>
-                        
                     </Grid>
                     <Grid container item xs={6} sm={6} md={6} direction="row" justify="start" alignItems="start">
-                       
-                    <Typography variant="body1">
-                    Nombre de bénévoles souhaité(s) : {mission.nb_people_required}
-                    </Typography>
-                       
+                        <Typography variant="body1">
+                            Nombre de bénévoles souhaité(s) : {mission.nb_people_required}
+                        </Typography>
                     </Grid>
                 </Grid>
 
                 <Grid container maxWidth="sm" className={classNames(classes.margin)}>
-                    <Grid item xs={6} sm={6} md={6} direction="row" justify="center" alignItems="center">
-                        
-                    <Typography variant="body1">
-                    Mission de {mission.night_or_day}
-                    </Typography>
-                        
+                    <Grid item xs={6} sm={6} md={6} direction="row" justify="center" alignItems="center">  
+                        <Typography variant="body1">
+                            Mission de : {lowerCase(mission.night_or_day)}
+                        </Typography>  
                     </Grid>
                     <Grid container item xs={6} sm={6} md={6} direction="row" justify="start" alignItems="start">
- 
+                        <Typography variant="body1">
+                            Compétence requise ? : {mission.skills_required}
+                        </Typography>
                     </Grid>
                 </Grid>
-                
+
                 <Grid container maxWidth="sm" className={classNames(classes.margin)}>
-                    <Grid item xs={12} sm={12} md={12} direction="row" justify="center" alignItems="center">
-                        
-                    <Typography variant="body1">
-                    Compétence requise ? :
-                    </Typography>
-                        
+                    <Grid item xs={12} sm={12} md={12} direction="row" justify="center" alignItems="center" className={classNames(classes.margin, classes.margint3)}>
+                        <Typography variant="body1" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <strong>Description de la mission</strong>
+                        </Typography>
                     </Grid>
                 </Grid>
                 
                 <Grid container maxWidth="sm" className={classNames(classes.margin)}>
                     <Grid item xs={12} sm={12} md={12} direction="row" justify="center" alignItems="center" className={classes.justify}>
-                        
-                    <Typography variant="body1">
-                    {mission.skills_required}
-                    </Typography>
-                        
+                        <Typography variant="body1">
+                            {mission.description}
+                        </Typography>  
                     </Grid>
                 </Grid>
-
-                <Grid container maxWidth="sm" className={classNames(classes.margin)}>
-                    <Grid item xs={12} sm={12} md={12} direction="row" justify="center" alignItems="center" className={classNames(classes.margin)}>
-                        
-                    <Typography variant="body1">
-                    <strong>Description :</strong>
-                    </Typography>
-                        
-                    </Grid>
-                </Grid>
-                
-                <Grid container maxWidth="sm" className={classNames(classes.margin)}>
-                    <Grid item xs={12} sm={12} md={12} direction="row" justify="center" alignItems="center" className={classes.justify}>
-                        
-                    <Typography variant="body1">
-                    {mission.description}
-                    </Typography>
-                        
-                    </Grid>
-                </Grid>
-                
-                
-                
                 
             </CardContent>
             <CardActions className={classNames(classes.margin, classes.padding, classes.center)}>
@@ -236,6 +205,7 @@ return (
 
        {user && mission && user.id==mission.author.id &&  <AdminApplyant/>}
        <AdminApplyant/>
+       
         <CommentaireMission/>
     
     </Container>
