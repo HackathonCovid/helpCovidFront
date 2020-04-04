@@ -99,7 +99,6 @@ let nb_days = calculateDateDuration();
         address_hospital,
         file_base_64,
         nb_days,
-
     }),
     })
     .then((response) => response.json())
@@ -249,7 +248,7 @@ return (
     </Grid>
 
     <Grid item xs={12}>
-    <ImageUploader
+    {/*<ImageUploader
         {...props}
         withIcon={true}
         onChange={onDrop}
@@ -258,7 +257,7 @@ return (
         defaultImage
         withPreview
         singleImage
-        />
+    />*/}
     </Grid>
 
     </Grid>
