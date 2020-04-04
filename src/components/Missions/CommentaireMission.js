@@ -181,7 +181,7 @@ export default function About() {
             <Card className={classNames(classes.commentaire, classes.margint2)}>
                 <CardContent>
                     <Typography variant="h5" gutterBottom >
-                    Commentaire
+                    Commentaires
                     </Typography>
                     {comments && comments.map((comment) => (
                     <Card className={classNames(classes.margint2)}>

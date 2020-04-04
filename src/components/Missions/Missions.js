@@ -92,6 +92,16 @@ right: '1%',
 btnMission: {
     'margin-bottom': theme.spacing(3),
 },
+root: {
+    minWidth: 275,
+    margin: 'auto',
+},
+title: {
+    fontSize: 14,
+},
+pos: {
+    marginBottom: 12,
+},
 }));
 
 
@@ -236,8 +246,20 @@ return (
     }
         <Grid container spacing={4}>
             {missions.length == 0 && 
-                <Typography variant="h5" className={classNames(classes.marginb)}><p>Il n'y a pas encore de mission !</p>
-                <p>Si vous participez à la lutte contre le Covid-19, pourquoi ne pas créer votre première mission ici ?</p></Typography>
+                <Card className={classes.root}>
+                    <CardContent>
+                        <Typography className={classes.title} color="textSecondary" gutterBottom>
+                            Il n'y a pas encore de mission 
+                        </Typography>
+                        <Typography variant="h5" component="h2">
+                            Si vous participez à la lutte contre le Covid-19, <br />
+                            pourquoi ne pas créer votre première mission ?
+                        </Typography>
+                    </CardContent>
+                    <CardActions>
+                        <Button size="small" href="/mission/add">Créer une mission</Button>
+                    </CardActions>
+                </Card>
             }
             {missions.length > 0 && missions && missions.map((mission) => (
             <Grid item key={mission.id} xs={12} sm={6} md={4}>

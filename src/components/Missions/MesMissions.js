@@ -46,6 +46,16 @@ footer: {
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(6),
 },
+root: {
+    minWidth: 275,
+    margin: 'auto',
+},
+title: {
+    fontSize: 14,
+},
+pos: {
+    marginBottom: 12,
+},
 }));
 
 
@@ -83,7 +93,7 @@ function deleteMission(idm) {
     .then((resp) => resp.json())
     .then((data) => {
     if(data) {
-        console.log(missions)
+        //console.log(missions)
        // setSuccess(true);
        for(let i = 0; i< missions.length; i++){
         if(missions[i].id === idm){
@@ -101,7 +111,7 @@ function editMission(idm) {
     history.push('/mission/update');
 }
 
-console.log(missions)
+//console.log(missions)
 
 return (
     <React.Fragment>
@@ -117,8 +127,20 @@ return (
          }
         <Grid container spacing={4}>
             {missions === undefined && 
-                <Typography variant="h5" className={classes.margin}><p>Vous n'avez pas encore de mission !</p>
-                <p>Si vous participez à la lutte contre le Covid-19 et que vous avez besoin d'aides, la plateforme est faite pour ça ;)</p></Typography>
+                <Card className={classes.root}>
+                    <CardContent>
+                        <Typography className={classes.title} color="textSecondary" gutterBottom>
+                            Aucune mission
+                        </Typography>
+                        <Typography variant="h5" component="h2">
+                            Si vous souhaitez participer à la lutte contre le Covid-19, <br />
+                            cette plateforme est faite pour vous !
+                        </Typography>
+                    </CardContent>
+                    <CardActions>
+                        <Button size="small" href="/missions">Nos missions</Button>
+                    </CardActions>
+                </Card>
             }
             {missions && missions.length > 0 && missions.map((mission) => (
             <Grid item key={mission.id} xs={12} sm={6} md={4}>
