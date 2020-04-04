@@ -83,16 +83,25 @@ function deleteMission(idm) {
     .then((resp) => resp.json())
     .then((data) => {
     if(data) {
-        setSuccess(true);
+        console.log(missions)
+       // setSuccess(true);
+       for(let i = 0; i< missions.length; i++){
+        if(missions[i].id === idm){
+            missions.splice(i, 1);
+            setMissions(missions)
+        }
+    }
     }
     })
     .then((data) => setMissions(data));
 }
+
 function editMission(idm) {
     localStorage.setItem('missionId', idm);
     history.push('/mission/update');
 }
 
+console.log(missions)
 
 return (
     <React.Fragment>
@@ -107,11 +116,11 @@ return (
             </Snackbar>
          }
         <Grid container spacing={4}>
-            {missions.length == 0 && 
+            {missions !== undefined && 
                 <Typography variant="h5" className={classes.margin}><p>Vous n'avez pas encore de mission !</p>
                 <p>Si vous participez à la lutte contre le Covid-19 et que vous avez besoin d'aides, la plateforme est faite pour ça ;)</p></Typography>
             }
-            {missions.length > 0 && missions && missions.map((mission) => (
+            {missions && missions.length > 0 && missions.map((mission) => (
             <Grid item key={mission.id} xs={12} sm={6} md={4}>
                 <Card className={classes.card}>
                 <CardMedia

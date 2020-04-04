@@ -211,8 +211,8 @@ function calculateDateDuration(departDate, endDate){
             .then((response) => response.json())
             .then((data) => {
                 if(data.status === 200) {
-                    window.location.reload();
-                    setCancelSuccess(true);
+                  //  window.location.reload();
+                   // setCancelSuccess(true);
                 }
             })
             .catch((error) => {
