@@ -56,6 +56,7 @@ export default function FicheMission() {
 const classes = useStyles();
 const [mission, setMission] = React.useState('');
 const [fetched, setFetched] = React.useState(false);
+const [appliants, setAppliant] = React.useState('');
 const [author, setAuthor] = React.useState('');
 let { id } = useParams();
 const user = JSON.parse(localStorage.getItem("user"));
@@ -92,6 +93,22 @@ function calculateDateDuration(departDate, endDate){
     
 }
 
+
+const renderPostulerButton = () => {
+    for(let i = 0 ; i < appliants.length; i++){
+        if(appliants[i].user_id === user.id){
+            return(
+                <div></div>
+            )
+        }
+    }
+    return(
+        <Button onClick={ elemnt => {postuler(elemnt,mission.id)}} variant="contained" size="small" color="secondary" className={classNames(classes.margin, classes.padding)}>
+            Je postule !
+        </Button>
+    )
+};
+
 const postuler = (element, id) =>{
 
     element.currentTarget.style.backgroundColor = "green";
@@ -114,8 +131,21 @@ const postuler = (element, id) =>{
         console.error(error);
         });
 }
-console.log(mission);
-console.log(author);
+
+
+
+useEffect(() => {
+    fetch(`${entrypoint}/api/applies/${id}`,{
+    methode : 'GET'
+    })
+    .then((resp) => resp.json())
+    .then((data) => setAppliant(data.response));
+    
+}, id)
+ console.log(mission);
+// console.log(user);
+// console.log(author);
+console.log(appliants);
 return (
 <div className={classes.root}>
 <CssBaseline />
@@ -196,16 +226,14 @@ return (
                 
             </CardContent>
             <CardActions className={classNames(classes.margin, classes.padding, classes.center)}>
-            
-                    <Button onClick={ elemnt => {postuler(elemnt,mission.id)}} variant="contained" size="small" color="secondary" className={classNames(classes.margin, classes.padding)}>
-                        Je postule !
-                    </Button>
+
+                    {user && appliants &&  renderPostulerButton() }
+
             </CardActions>
         </Card>
 
        {user && mission && user.id==mission.author.id &&  <AdminApplyant/>}
 
-       <AdminApplyant/>
        
         <CommentaireMission/>
     

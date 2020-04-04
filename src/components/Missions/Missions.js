@@ -283,7 +283,7 @@ return (
                     <Button href={"/mission/fiche/" + mission.id} size="small" color="primary">
                     Voir
                     </Button>
-                    {localStorage.getItem('user') &&
+                    {localStorage.getItem('user') &&  userMissions &&
                         renderPostulerButton(mission.id, userMissions)
                     }
                 </CardActions>

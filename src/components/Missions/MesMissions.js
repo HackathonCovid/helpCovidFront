@@ -116,7 +116,7 @@ return (
             </Snackbar>
          }
         <Grid container spacing={4}>
-            {missions !== undefined && 
+            {missions === undefined && 
                 <Typography variant="h5" className={classes.margin}><p>Vous n'avez pas encore de mission !</p>
                 <p>Si vous participez à la lutte contre le Covid-19 et que vous avez besoin d'aides, la plateforme est faite pour ça ;)</p></Typography>
             }

@@ -104,7 +104,7 @@ function removeApplyMission(missionId) {
             console.error(error);
         });
 }
-
+console.log(missions)
 
 return (
     <React.Fragment>
@@ -112,46 +112,82 @@ return (
     <main className={classes.canvas}>
         <Container className={classes.cardGrid} maxWidth="md">
         <Grid container spacing={4}>
-            {missions.length == 0 && 
+            {missions === undefined && 
                 <Typography variant="h5" className={classes.marginb}><p>Vous n'avez pas encore de mission !</p>
                 <p>Si vous souhaitez participer à la lutte contre le Covid-19, cette plateforme est pour vous ;)</p></Typography>
             }
-            {missions.length >0 && missions && missions.map((mission) => (
-            <Grid item key={mission.id} xs={12} sm={6} md={4}>
-                <Card className={classes.card}>
-                <CardMedia
-                    className={classes.cardMedia}
-                    image="img.jpg"
-                    title="Image title"
-                />
-                <CardContent className={classes.cardContent}>
-                    <Typography gutterBottom variant="h5" component="h2">
-                    {mission.mission.title}
-                    </Typography>
-                    <Typography>
-                    {mission.mission.description}
-                    </Typography>
-                    <Typography>
-                    Nombre personnes : {mission.mission.nb_people_required}
-                    </Typography>
-                    <Typography>
-                    Compétences requises : {mission.mission.skills_required}
-                    </Typography>
-                    <Typography>
-                    Jour ou nuit : {mission.mission.night_or_day}
-                    </Typography>
-                </CardContent>
-                <CardActions>
-                    <Button href={"/mission/fiche/" + mission.id} size="small" color="primary">
-                    Voir
-                    </Button>
-                    <Button onClick={() => (removeApplyMission(mission.id))} size="small" color="primary">
-                    Annuler ma mission
-                    </Button>
-                </CardActions>
+            {/* Mission validé*/missions && missions.length >0 && missions && missions.map((mission) => (
+                  mission.validate === 1 &&<Grid item key={mission.id} xs={12} sm={6} md={4}>
+                        <Card className={classes.card}>
+                        <CardMedia
+                            className={classes.cardMedia}
+                            image="img.jpg"
+                            title="Image title"
+                        />
+                        <CardContent className={classes.cardContent}>
+                            <Typography gutterBottom variant="h5" component="h2">
+                            {mission.mission.title}
+                            </Typography>
+                            <Typography>
+                            {mission.mission.description}
+                            </Typography>
+                            <Typography>
+                            Nombre personnes : {mission.mission.nb_people_required}
+                            </Typography>
+                            <Typography>
+                            Compétences requises : {mission.mission.skills_required}
+                            </Typography>
+                            <Typography>
+                            Jour ou nuit : {mission.mission.night_or_day}
+                            </Typography>
+                        </CardContent>
+                        <CardActions>
+                            <Button href={"/mission/fiche/" + mission.mission_id} size="small" color="primary">
+                            Voir
+                            </Button>
+                        </CardActions>
 
-                </Card>
-            </Grid>
+                        </Card>
+                    </Grid>
+            ))}
+        </Grid>
+        <Grid container spacing={4}>
+            {/* Mission Attente ou refusé*/missions && missions.length >0 && missions && missions.map((mission) => (
+                  mission.validate !== 1 &&<Grid item key={mission.id} xs={12} sm={6} md={4}>
+                        <Card className={classes.card}>
+                        <CardMedia
+                            className={classes.cardMedia}
+                            image="img.jpg"
+                            title="Image title"
+                        />
+                        <CardContent className={classes.cardContent}>
+                            <Typography gutterBottom variant="h5" component="h2">
+                            {mission.mission.title}
+                            </Typography>
+                            <Typography>
+                            {mission.mission.description}
+                            </Typography>
+                            <Typography>
+                            Nombre personnes : {mission.mission.nb_people_required}
+                            </Typography>
+                            <Typography>
+                            Compétences requises : {mission.mission.skills_required}
+                            </Typography>
+                            <Typography>
+                            Jour ou nuit : {mission.mission.night_or_day}
+                            </Typography>
+                        </CardContent>
+                        <CardActions>
+                            <Button href={"/mission/fiche/" + mission.mission_id} size="small" color="primary">
+                            Voir
+                            </Button>
+                            <Button onClick={() => (removeApplyMission(mission.id))} size="small" color="primary">
+                            Annuler ma mission
+                            </Button>
+                        </CardActions>
+
+                        </Card>
+                    </Grid>
             ))}
         </Grid>
         </Container>

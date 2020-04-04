@@ -155,7 +155,7 @@ export default function About() {
                 </Alert>
             </Snackbar>
         }
-        <Card className={classNames(classes.commentaire, classes.margint2)}>
+        {user &&<Card className={classNames(classes.commentaire, classes.margint2)}>
         <CardActions className={classNames(classes.margin, classes.padding, classes.center)}>
             <TextField
             required
@@ -170,13 +170,13 @@ export default function About() {
             />
         </CardActions>
 
-            <CardActions className={classNames(classes.margin, classes.padding, classes.center)}>
-            <Button variant="contained" size="small" color="grey" className={classNames(classes.margin, classes.padding)}
-            onClick={addComment}>
-            Commenter
-            </Button>
+             <CardActions className={classNames(classes.margin, classes.padding, classes.center)}>
+                <Button variant="contained" size="small" color="grey" className={classNames(classes.margin, classes.padding)}
+                onClick={addComment}>
+                Commenter
+                </Button>
             </CardActions>
-        </Card>
+        </Card>}
         
             <Card className={classNames(classes.commentaire, classes.margint2)}>
                 <CardContent>
@@ -197,24 +197,24 @@ export default function About() {
                             title={comment.user.firstname}
                             subheader={comment.user.lastname}
                         />
-                        <Menu
-                            id="menu-appbar"
-                            anchorEl={anchorEl}
-                            anchorOrigin={{
-                            vertical: 'top',
-                            horizontal: 'right',
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                            vertical: 'top',
-                            horizontal: 'right',
-                            }}
-                            open={open}
-                            onClose={handleClose}
-                        >
-                            {user && comment.user_id == user.id && <MenuItem onClick={() => {deleteCom(comment.id)}}>Supprimer</MenuItem>}
-                            
-                        </Menu>
+                           {user && comment.user_id == user.id && <Menu
+                                id="menu-appbar"
+                                anchorEl={anchorEl}
+                                anchorOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                                }}
+                                keepMounted
+                                transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                                }}
+                                open={open}
+                                onClose={handleClose}
+                            >
+                                 <MenuItem onClick={() => {deleteCom(comment.id)}}>Supprimer</MenuItem>
+                                
+                            </Menu>}
                         <CardMedia
                             className={classes.media}
                             image="/static/images/cards/paella.jpg"

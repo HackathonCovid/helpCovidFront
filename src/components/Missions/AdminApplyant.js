@@ -116,7 +116,7 @@ export default function About() {
                         <AccountBoxIcon/>
                     </ListItemAvatar>
                     <ListItemText
-                    primary={appliant.user.firstname + '  ' + appliant.user.lastname + '. ' +appliant.user.phone_number} 
+                    primary={"Nom : " +appliant.user.firstname + ', Prénom : ' + appliant.user.lastname + ', Numéro de tel : ' +appliant.user.phone_number} 
                     />
                     
                         {appliant.validate ===0 && 
