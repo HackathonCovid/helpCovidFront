@@ -61,10 +61,10 @@ const onDrop = (picture, pictureDataURLs) => {
     setfile_base_64(pictureDataURLs[0]);
     setPictures([...pictures, picture]);
 };
-console.log(file_base_64);
+//console.log(file_base_64);
 
 function calculateDateDuration(){
-    console.log(start_date);
+    //console.log(start_date);
     const date1 = new Date(start_date);
     const date2 = new Date(end_date);
     const diffTime = Math.abs(date2 - date1);

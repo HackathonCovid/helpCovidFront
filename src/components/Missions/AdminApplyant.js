@@ -96,7 +96,7 @@ export default function About() {
           //  console.log(data)
         })
     }
-    console.log(appliants)
+    //console.log(appliants)
 
     return (
     <div className={classes.root}>

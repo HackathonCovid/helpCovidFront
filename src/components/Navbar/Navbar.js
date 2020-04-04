@@ -10,7 +10,6 @@ import Menu from '@material-ui/core/Menu';
 import Button from '@material-ui/core/Button';
 
 import history from '../../history';
-import { red } from '@material-ui/core/colors';
 
 const useStyles = makeStyles((theme) => ({
 root: {
@@ -92,7 +91,9 @@ return (
                 onClose={handleClose}
             >
                 <MenuItem onClick={() => { history.push('/profil')}}>Mon profil</MenuItem>
-                <MenuItem onClick={() => {history.push('/mesmissions')}}>Mes missions crées</MenuItem>
+                {localStorage.getItem('user.is_volunteer == 0') && (
+                    <MenuItem onClick={() => {history.push('/mesmissions')}}>Mes missions crées</MenuItem>
+                )}
                 <MenuItem onClick={() => {history.push('/mesmissionsbenev')}}>Mes missions de benevolat</MenuItem>
                 <MenuItem onClick={() => {history.push('/changerMdp')}}>Changer mon mot de passe</MenuItem>
                 <MenuItem onClick={() => { localStorage.removeItem('user'); history.push('/'); } }>Se déconnecter</MenuItem>

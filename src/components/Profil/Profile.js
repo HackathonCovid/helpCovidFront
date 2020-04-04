@@ -10,9 +10,6 @@ import AccountBox from '@material-ui/icons/AccountBox';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { MuiPickersUtilsProvider, KeyboardDatePicker } from '@material-ui/pickers';
-import DateFnsUtils from '@date-io/date-fns';
-import MenuItem from '@material-ui/core/MenuItem';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 
@@ -48,16 +45,6 @@ const useStyles = makeStyles(theme => ({
         margin: theme.spacing(3, 0, 2),
     },
 }));
-const sexes = [
-    {
-        value: 'Homme',
-        label: 'H',
-    },
-    {
-        value: 'Femme',
-        label: 'F',
-    },
-];
 
 export default function UserProfil() {
     const data = JSON.parse(localStorage.getItem('user'));

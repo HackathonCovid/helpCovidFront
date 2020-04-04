@@ -9,10 +9,8 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 
-import history from '../../history';
 import {entrypoint} from "../../entrypoint";
 
 
@@ -46,6 +44,16 @@ cardContent: {
 footer: {
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(6),
+},
+root: {
+    minWidth: 275,
+    margin: 'auto',
+},
+title: {
+    fontSize: 14,
+},
+pos: {
+    marginBottom: 12,
 },
 }));
 
@@ -104,7 +112,7 @@ function removeApplyMission(missionId) {
             console.error(error);
         });
 }
-console.log(missions)
+//console.log(missions)
 
 return (
     <React.Fragment>
@@ -112,9 +120,21 @@ return (
     <main className={classes.canvas}>
         <Container className={classes.cardGrid} maxWidth="md">
         <Grid container spacing={4}>
-            {missions === undefined && 
-                <Typography variant="h5" className={classes.marginb}><p>Vous n'avez pas encore de mission !</p>
-                <p>Si vous souhaitez participer à la lutte contre le Covid-19, cette plateforme est pour vous ;)</p></Typography>
+            {missions.length === 0 && 
+                <Card className={classes.root}>
+                    <CardContent>
+                        <Typography className={classes.title} color="textSecondary" gutterBottom>
+                            Aucune mission
+                        </Typography>
+                        <Typography variant="h5" component="h2">
+                            Si vous souhaitez participer à la lutte contre le Covid-19, <br />
+                            cette plateforme est faite pour vous !
+                        </Typography>
+                    </CardContent>
+                    <CardActions>
+                        <Button size="small" href="/missions">Nos missions</Button>
+                    </CardActions>
+                </Card>
             }
             {/* Mission validé*/missions && missions.length >0 && missions && missions.map((mission) => (
                   mission.validate === 1 &&<Grid item key={mission.id} xs={12} sm={6} md={4}>

@@ -142,10 +142,10 @@ useEffect(() => {
     .then((data) => setAppliant(data.response));
     
 }, id)
- console.log(mission);
+// console.log(mission);
 // console.log(user);
 // console.log(author);
-console.log(appliants);
+//console.log(appliants);
 return (
 <div className={classes.root}>
 <CssBaseline />
