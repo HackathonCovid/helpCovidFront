@@ -13,9 +13,14 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import MenuItem from '@material-ui/core/MenuItem';
 import { useParams } from "react-router-dom";
-
+import Snackbar from '@material-ui/core/Snackbar';
 import history from '../../history';
 import {entrypoint} from "../../entrypoint";
+import MuiAlert from '@material-ui/lab/Alert';
+
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const useStyles = makeStyles(theme => ({
     '@global': {
@@ -69,7 +74,14 @@ export default function SignUp() {
     const [type_orga, setTypeOrga] = React.useState('');
     let   [is_volunteer, setIsvolunter] = React.useState('');
     const [registered, setRegistered] = React.useState(false);
+    const [error, setError] = React.useState(false);
     const classes = useStyles();
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setError(false);
+    };
     let { benevole } = useParams();
 
     if (benevole === "benevole"){
@@ -108,8 +120,12 @@ export default function SignUp() {
         })
             .then((response) => response.json())
             .then((data) => {
-                if(data.response.hasOwnProperty('id')) {
+                if(data.hasOwnProperty('error')) {
+                    setError(true);
+                }
+                else if(data.response.hasOwnProperty('id')) {
                     setRegistered(true);
+                    setError(false);
                     history.push('/login');
                 }
             })
@@ -121,7 +137,11 @@ export default function SignUp() {
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
-
+            { error && <Snackbar open={error} autoHideDuration={6000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity="error">
+                    Erreur
+                </Alert>
+            </Snackbar> }
             { registered && <h2>Compte créé</h2> }
 
             <div className={classes.paper}>

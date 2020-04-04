@@ -10,7 +10,8 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import MuiAlert from '@material-ui/lab/Alert';
-
+import Box from '@material-ui/core/Box';
+import history from '../../history';
 import {entrypoint} from "../../entrypoint";
 
 
@@ -55,6 +56,12 @@ title: {
 pos: {
     marginBottom: 12,
 },
+bgwhite: {
+    backgroundColor : '#FCFAFF',
+    padding: theme.spacing(2),
+    marginBottom : theme.spacing(8),
+    boxShadow : '0px 0px 2px black',
+},
 }));
 
 
@@ -67,7 +74,6 @@ const [userMissions, setUserMissions] = React.useState('');
 const [cancelSuccess, setCancelSuccess] = React.useState(false);
 const id = React.useState(JSON.parse(localStorage.getItem('user')).id);
 const author_id = id[0];
-
 const user = JSON.parse(localStorage.getItem("user"));
 
 const handleClose = (event, reason) => {
@@ -119,23 +125,30 @@ return (
     <CssBaseline />
     <main className={classes.canvas}>
         <Container className={classes.cardGrid} maxWidth="md">
-        <Grid container spacing={4}>
-            {missions.length === 0 && 
-                <Card className={classes.root}>
-                    <CardContent>
-                        <Typography className={classes.title} color="textSecondary" gutterBottom>
-                            Aucune mission
-                        </Typography>
-                        <Typography variant="h5" component="h2">
-                            Si vous souhaitez participer à la lutte contre le Covid-19, <br />
-                            cette plateforme est faite pour vous !
-                        </Typography>
-                    </CardContent>
-                    <CardActions>
-                        <Button size="small" href="/missions">Nos missions</Button>
-                    </CardActions>
-                </Card>
+            <Grid container spacing={4}>
+                {missions.length === 0 && 
+                    <Card className={classes.root}>
+                        <CardContent>
+                            <Typography className={classes.title} color="textSecondary" gutterBottom>
+                                Aucune mission
+                            </Typography>
+                            <Typography variant="h5" component="h2">
+                                Si vous souhaitez participer à la lutte contre le Covid-19, <br />
+                                cette plateforme est faite pour vous !
+                            </Typography>
+                        </CardContent>
+                        <CardActions>
+                            <Button size="small" href="/missions">Nos missions</Button>
+                        </CardActions>
+                    </Card>
+                }
+            </Grid>
+            <Box className={classes.bgwhite}>
+            {/* Mission validé*/missions && missions.length >0 &&
+            <Typography variant="h5" className={classes.marginb}><p>Missions validées :</p></Typography>
             }
+            <Grid container spacing={4}>
+            
             {/* Mission validé*/missions && missions.length >0 && missions && missions.map((mission) => (
                   mission.validate === 1 &&<Grid item key={mission.id} xs={12} sm={6} md={4}>
                         <Card className={classes.card}>
@@ -171,6 +184,11 @@ return (
                     </Grid>
             ))}
         </Grid>
+        </Box>
+        <Box className={classes.bgwhite}>
+        {/* Mission validé*/missions && missions.length >0 &&
+            <Typography variant="h5" className={classes.marginb}><p>Missions en attente de validation :</p></Typography>
+        }
         <Grid container spacing={4}>
             {/* Mission Attente ou refusé*/missions && missions.length >0 && missions && missions.map((mission) => (
                   mission.validate !== 1 &&<Grid item key={mission.id} xs={12} sm={6} md={4}>
@@ -210,6 +228,7 @@ return (
                     </Grid>
             ))}
         </Grid>
+        </Box>
         </Container>
     </main>
     </React.Fragment>
