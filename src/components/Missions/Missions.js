@@ -130,7 +130,7 @@ const handleClose = (event, reason) => {
 let   isvolunt = false;
 if(isv == 0){
     isvolunt = true;
-    console.log(isvolunt);
+    //console.log(isvolunt);
 }
 
 useEffect(() => {

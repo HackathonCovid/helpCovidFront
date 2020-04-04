@@ -58,7 +58,7 @@ const [mission, setMission] = React.useState('');
 const [fetched, setFetched] = React.useState(false);
 const [author, setAuthor] = React.useState('');
 let { id } = useParams();
-
+const user = JSON.parse(localStorage.getItem("user"));
 const [expanded, setExpanded] = React.useState(false);
 
   const handleExpandClick = () => {
@@ -92,8 +92,31 @@ function calculateDateDuration(departDate, endDate){
     
 }
 
+const postuler = (element, id) =>{
+
+    element.currentTarget.style.backgroundColor = "green";
+    console.log(id)
+    fetch(`${entrypoint}/api/applies/${id}`, {
+        method: 'POST',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'authorization': 'Bearer '+ user.token,
+        },
+        })
+        .then((response) => response.json())
+        .then((data) => {
+        if(data.response.hasOwnProperty('author_id')) {
+            
+        }
+        })
+        .catch((error) => {
+        console.error(error);
+        });
+}
+/*console.log()
 console.log(mission);
-console.log(author);
+console.log(author);*/
 return (
 <div className={classes.root}>
 <CssBaseline />
@@ -174,17 +197,14 @@ return (
                 
             </CardContent>
             <CardActions className={classNames(classes.margin, classes.padding, classes.center)}>
-                {localStorage.getItem('user') &&
-                    <Button variant="contained" size="small" color="secondary" className={classNames(classes.margin, classes.padding)}>
-                    Je postule !
-                    </Button>
-                }
+            <Button onClick={ elemnt => {postuler(elemnt,mission.id)}} variant="contained" size="small" color="secondary" className={classNames(classes.margin, classes.padding)}>
+                Je postule !
+            </Button>
             </CardActions>
         </Card>
 
-        
-            <AdminApplyant/>
-        
+       {user && mission && user.id==mission.author.id &&  <AdminApplyant/>}
+       <AdminApplyant/>
        
         <CommentaireMission/>
     
