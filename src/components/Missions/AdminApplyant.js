@@ -129,7 +129,16 @@ export default function About() {
                     </Grid>
                     <Grid item xs={6} sm={6} md={8}>
                     <ListItemText 
-                    primary={"Nom : " +appliant.user.firstname + ', Prénom : ' + appliant.user.lastname + ', Numéro de tel : ' +appliant.user.phone_number} 
+                    primary={"Prénom : " +appliant.user.firstname}
+
+                    />
+                    <ListItemText 
+                    primary={'Nom : ' + appliant.user.lastname}
+
+                    />
+                    <ListItemText 
+                    primary={'Numéro de téléphone : ' +appliant.user.phone_number}
+
                     />
                     </Grid>
                     <Grid item xs={12} sm={3} md={2}>
