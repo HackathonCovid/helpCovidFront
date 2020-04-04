@@ -91,7 +91,7 @@ return (
         )}
         {!localStorage.getItem('user') && (
             <div>
-            <Button className={classes.buttonhover} color="inherit" href="/">Home</Button>
+            <Button className={classes.buttonhover} color="inherit" href="/">Accueil</Button>
             <Button className={classes.buttonhover} color="inherit" href="/register/benevole">Devenir bénévole</Button>
             <Button className={classes.buttonhover} color="inherit" href="/register/soignant">J'ai une mission</Button>
             <Button color="inherit" href="/missions">Nos missions</Button>
