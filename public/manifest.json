@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Sante&Benev",
+  "name": "Application pour aider les établissements de santé",
   "icons": [
     {
       "src": "favicon.ico",

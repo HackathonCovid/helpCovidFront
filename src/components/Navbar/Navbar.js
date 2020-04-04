@@ -10,6 +10,7 @@ import Menu from '@material-ui/core/Menu';
 import Button from '@material-ui/core/Button';
 
 import history from '../../history';
+import { red } from '@material-ui/core/colors';
 
 const useStyles = makeStyles((theme) => ({
 root: {
@@ -18,16 +19,20 @@ root: {
 menuButton: {
     marginRight: theme.spacing(2),
 },
-buttonhover: {
-    '&:hover': {
-        background: "#009FFF",
-        },
-},
 title: {
     flexGrow: 1,
     '&:hover': {
         cursor : 'pointer',
         },
+},
+buttonnav : {
+    [theme.breakpoints.down('sm')]: {
+        display : 'none',
+        
+      },
+      [theme.breakpoints.up('md')]: {
+        
+      },
 },
 }));
 
@@ -60,14 +65,8 @@ return (
 
         {localStorage.getItem('user') && (
             <div>
-            <Button className={classes.buttonhover} color="inherit" href="/">Home</Button>
-            {!localStorage.getItem('user') && (
-            <Button className={classes.buttonhover} color="inherit" href="/register/benevole">Devenir bénévole</Button>
-            )}
-            {!localStorage.getItem('user') && (
-            <Button className={classes.buttonhover} color="inherit" href="/register/soignant">J'ai une mission</Button>
-            )}
-            <Button className={classes.buttonhover} color="inherit" href="/missions">Nos missions</Button>
+            <Button className={classes.buttonnav} color="inherit" href="/">Accueil</Button>
+            <Button color="inherit" href="/missions">Nos missions</Button>
             <IconButton
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
@@ -102,6 +101,9 @@ return (
         )}
         {!localStorage.getItem('user') && (
             <div>
+            <Button className={classes.buttonnav} color="inherit" href="/">Accueil</Button>
+            <Button className={classes.buttonnav} color="inherit" href="/register/benevole">Devenir bénévole</Button>
+            <Button className={classes.buttonnav} color="inherit" href="/register/soignant">J'ai une mission</Button>
             <Button color="inherit" href="/missions">Nos missions</Button>
             <Button color="inherit" href="/login">Login</Button>
             </div>

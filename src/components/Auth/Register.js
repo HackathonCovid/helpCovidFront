@@ -130,7 +130,7 @@ export default function SignUp() {
                 </Avatar>
 
                 <Typography component="h1" variant="h5">
-                    Sign up
+                    S'inscrire
                 </Typography>
 
                 <form className={classes.form} onSubmit={register}>
@@ -202,7 +202,7 @@ export default function SignUp() {
                                 required
                                 fullWidth
                                 id="adresse"
-                                label="adresse"
+                                label="Adresse"
                                 name="adresse"
                                 autoComplete="adresse"
                                 value={adress}
@@ -228,7 +228,7 @@ export default function SignUp() {
                                 required
                                 fullWidth
                                 id="email"
-                                label="email"
+                                label="E-mail"
                                 name="email"
                                 autoComplete="email"
                                 value={email}
@@ -242,7 +242,7 @@ export default function SignUp() {
                                 required
                                 fullWidth
                                 id="descritpion"
-                                label="description"
+                                label="Description"
                                 name="description"
                                 autoComplete="description"
                                 value={description}
@@ -255,7 +255,7 @@ export default function SignUp() {
                                 required
                                 fullWidth
                                 id="téléphone"
-                                label="téléphone"
+                                label="Téléphone"
                                 name="téléphone"
                                 autoComplete="phone_number"
                                 value={phone_number}

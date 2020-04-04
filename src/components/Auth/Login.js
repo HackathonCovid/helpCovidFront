@@ -136,7 +136,7 @@ export default function SignInSide() {
                     />
                     <FormControlLabel
                         control={<Checkbox value="remember" color="primary" />}
-                        label="Remember me"
+                        label="Se souvenir de moi"
                     />
                     <Button
                         type="submit"
@@ -154,7 +154,7 @@ export default function SignInSide() {
                             </Link>
                         </Grid>
                         <Grid item>
-                            <Link href="/home" variant="body2">
+                            <Link href="/" variant="body2">
                                 {"S'inscrire ?"}
                             </Link>
                         </Grid>

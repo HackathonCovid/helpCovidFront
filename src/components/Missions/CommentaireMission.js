@@ -184,7 +184,7 @@ export default function About() {
                     Commentaire
                     </Typography>
                     {comments && comments.map((comment) => (
-                    <Card>
+                    <Card className={classNames(classes.margint2)}>
                         <CardHeader
                             avatar={
                                 <Avatar src="/broken-image.jpg" />

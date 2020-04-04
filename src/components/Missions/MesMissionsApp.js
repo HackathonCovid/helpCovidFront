@@ -16,6 +16,7 @@ import history from '../../history';
 import {entrypoint} from "../../entrypoint";
 
 
+
 function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
@@ -23,6 +24,9 @@ function Alert(props) {
 const useStyles = makeStyles((theme) => ({
 icon: {
     marginRight: theme.spacing(2),
+},
+canvas: {
+    minHeight : '91vh',
 },
 cardGrid: {
     paddingTop: theme.spacing(8),
@@ -48,8 +52,11 @@ footer: {
 
 export default function MesMissionsApp() {
 const classes = useStyles();
+const userData = JSON.parse(localStorage.getItem('user'));
 const [missions, setMissions] = React.useState('');
 const [success, setSuccess] = React.useState(false);
+const [userMissions, setUserMissions] = React.useState('');
+const [cancelSuccess, setCancelSuccess] = React.useState(false);
 const id = React.useState(JSON.parse(localStorage.getItem('user')).id);
 const author_id = id[0];
 
@@ -71,43 +78,78 @@ useEffect(() => {
     .then((data) => setMissions(data.response));
 },[author_id])
 
+function removeApplyMission(missionId) {
+
+    const applyId = userData.id;
+    fetch(`${entrypoint}/api/applies/${missionId}`, {
+        method: 'DELETE',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+            'authorization': 'Bearer ' + userData.token,
+        },
+        body: JSON.stringify({
+            applyId,
+            missionId
+        }),
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            if(data.status === 200) {
+                window.location.reload();
+                setCancelSuccess(true);
+            }
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+}
+
 
 return (
     <React.Fragment>
     <CssBaseline />
-    <main>
+    <main className={classes.canvas}>
         <Container className={classes.cardGrid} maxWidth="md">
         <Grid container spacing={4}>
-            {missions && missions.map((mission) => (
+            {missions.length == 0 && 
+                <Typography variant="h5" className={classes.marginb}><p>Vous n'avez pas encore de mission !</p>
+                <p>Si vous souhaitez participer à la lutte contre le Covid-19, cette plateforme est pour vous ;)</p></Typography>
+            }
+            {missions.length >0 && missions && missions.map((mission) => (
             <Grid item key={mission.id} xs={12} sm={6} md={4}>
                 <Card className={classes.card}>
                 <CardMedia
                     className={classes.cardMedia}
-                    image="https://source.unsplash.com/random"
+                    image="img.jpg"
                     title="Image title"
                 />
                 <CardContent className={classes.cardContent}>
                     <Typography gutterBottom variant="h5" component="h2">
-                    {mission.title}
+                    {mission.mission.title}
                     </Typography>
                     <Typography>
-                    {mission.description}
+                    {mission.mission.description}
                     </Typography>
                     <Typography>
-                    Nombre personnes : {mission.nb_people_required}
+                    Nombre personnes : {mission.mission.nb_people_required}
                     </Typography>
                     <Typography>
-                    Compétences requises : {mission.skills_required}
+                    Compétences requises : {mission.mission.skills_required}
                     </Typography>
                     <Typography>
-                    Jour ou nuit : {mission.night_or_day}
+                    Jour ou nuit : {mission.mission.night_or_day}
                     </Typography>
                 </CardContent>
                 <CardActions>
                     <Button href={"/mission/fiche/" + mission.id} size="small" color="primary">
                     Voir
                     </Button>
+                    <Button onClick={() => (removeApplyMission(mission.id))} size="small" color="primary">
+                    Annuler ma mission
+                    </Button>
                 </CardActions>
+
                 </Card>
             </Grid>
             ))}

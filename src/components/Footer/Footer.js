@@ -34,7 +34,7 @@ return (
         <Container maxWidth="sm">
         <Typography variant="body2">Réalisé par :
         </Typography>
-        <Typography variant="body2">Walid Mouhsin, Muhammad Tounsi, Kosseyla Hammouche, Hugo Chea, Ayman Zair
+        <Typography variant="body2">Walid Mouhsin, Muhammad Tounsi, Kosseyla Hamouche, Hugo Chea, Aymane Zair
         </Typography>
         <Copyright className={classes.white}/>
         </Container>
