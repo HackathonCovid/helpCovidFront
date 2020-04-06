@@ -57,10 +57,12 @@ pos: {
     marginBottom: 12,
 },
 bgwhite: {
-    backgroundColor : '#FCFAFF',
+    backgroundColor : '#FFFFFF',
+    textAlign: 'center',
+    borderRadius: '20px',
     padding: theme.spacing(2),
     marginBottom : theme.spacing(8),
-    boxShadow : '0px 0px 2px black',
+    boxShadow : '0px 0px 2px white',
 },
 }));
 
@@ -144,13 +146,13 @@ return (
                 }
             </Grid>
             <Box className={classes.bgwhite}>
-            {/* Mission validé*/missions && missions.length >0 &&
-            <Typography variant="h5" className={classes.marginb}><p>Missions validées :</p></Typography>
-            }
-            <Grid container spacing={4}>
+                {/* Mission validé*/missions && missions.length >0 &&
+                    <Typography variant="h5" className={classes.marginb} style= {{ margin: 'auto' }}><p>Missions validées</p></Typography>
+                }
+                <Grid container spacing={4}>
             
-            {/* Mission validé*/missions && missions.length >0 && missions && missions.map((mission) => (
-                  mission.validate === 1 &&<Grid item key={mission.id} xs={12} sm={6} md={4}>
+                {/* Mission validé*/missions && missions.length >0 && missions && missions.map((mission) => (
+                    mission.validate === 1 &&<Grid item key={mission.id} xs={12} sm={6} md={4}>
                         <Card className={classes.card}>
                         <CardMedia
                             className={classes.cardMedia}
@@ -163,15 +165,12 @@ return (
                             </Typography>
                             <Typography>
                             {mission.mission.description}
+                            </Typography><br />
+                            <Typography>
+                            A la recherche de {mission.mission.nb_people_required} personnes
                             </Typography>
                             <Typography>
-                            Nombre personnes : {mission.mission.nb_people_required}
-                            </Typography>
-                            <Typography>
-                            Compétences requises : {mission.mission.skills_required}
-                            </Typography>
-                            <Typography>
-                            Jour ou nuit : {mission.mission.night_or_day}
+                            Mission de <strong>{mission.mission.night_or_day.toLowerCase()}</strong>
                             </Typography>
                         </CardContent>
                         <CardActions>
@@ -187,7 +186,7 @@ return (
         </Box>
         <Box className={classes.bgwhite}>
         {/* Mission validé*/missions && missions.length >0 &&
-            <Typography variant="h5" className={classes.marginb}><p>Missions en attente de validation :</p></Typography>
+            <Typography variant="h5" className={classes.marginb}><p>Missions en attente de validation</p></Typography>
         }
         <Grid container spacing={4}>
             {/* Mission Attente ou refusé*/missions && missions.length >0 && missions && missions.map((mission) => (
@@ -204,15 +203,12 @@ return (
                             </Typography>
                             <Typography>
                             {mission.mission.description}
+                            </Typography><br />
+                            <Typography>
+                            A la recherche de {mission.mission.nb_people_required} personnes
                             </Typography>
                             <Typography>
-                            Nombre personnes : {mission.mission.nb_people_required}
-                            </Typography>
-                            <Typography>
-                            Compétences requises : {mission.mission.skills_required}
-                            </Typography>
-                            <Typography>
-                            Jour ou nuit : {mission.mission.night_or_day}
+                            Mission de <strong>{mission.mission.night_or_day.toLowerCase()}</strong>
                             </Typography>
                         </CardContent>
                         <CardActions>

@@ -265,7 +265,7 @@ return (
             <Grid item key={mission.id} xs={12} sm={6} md={4}>
                 <Card className={classes.card}>
                 <CardHeader className={classes.bgred}
-                    title= {mission.title}
+                    title= {mission.title.length > 15 && mission.title.substr(0, 20) + "..."}
                 />
                 <CardMedia
                     className={classes.cardMedia}
@@ -287,8 +287,8 @@ return (
                     {'Description :'}
                     </Typography>
                     <Typography variant="body2" gutterBottom>
-                    {mission.description.length > 120 && mission.description.substr(0, 120) + "..."}
-                    {mission.description.length < 121 && mission.description}
+                    {mission.description.length > 50 && mission.description.substr(0, 50) + "..."}
+                    {mission.description.length < 51 && mission.description}
                     </Typography>
 
                     <Typography variant="h6" component="h2" className={classNames(classes.borderT)}>
